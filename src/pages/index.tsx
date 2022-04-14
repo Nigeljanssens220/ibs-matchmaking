@@ -3,10 +3,13 @@ import type { NextPage } from 'next'
 import StatCards from '@/components/StatCards'
 import Typography from '@/components/Typography'
 import Hero from '@/components/Hero'
+import Footer from '@/components/Footer'
+import Header from '@/components/Header'
 
 const Home: NextPage = () => {
     return (
         <div>
+            <Header />
             <Hero />
             {/* hard-coded for now */}
             <StatCards
@@ -36,6 +39,9 @@ const Home: NextPage = () => {
                     whole wide world. You should totally try us!
                 </Typography>
             </StatCards>
+            <Footer>
+                © Isatis Business Solutions 2022. All Rights Reserved.
+            </Footer>
         </div>
     )
 }

@@ -14,11 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                     <title>Matchmaking - Isatis Business Solutions</title>
                     <link rel="favicon" href="/favicon.ico" />
                 </Head>
-                <Header />
                 <Component {...pageProps} />
-                <Footer>
-                    © Isatis Business Solutions 2022. All Rights Reserved.
-                </Footer>
             </SessionProvider>
         </>
     )

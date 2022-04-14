@@ -34,7 +34,6 @@ const Header: FC = () => {
                         </Typography>
                     </Link>
                 </div>
-
                 <div className="">
                     <NavBarMenu />
                 </div>
