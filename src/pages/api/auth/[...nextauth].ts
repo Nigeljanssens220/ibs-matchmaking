@@ -16,20 +16,29 @@ export default NextAuth({
         }),
         // ...add more providers here
     ],
-    secret: process.env.JWT_SECRET,
+    session: {
+        strategy: 'jwt',
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+    },
+    jwt: {
+        secret: process.env.JWT_SECRET,
+    },
+    pages: {
+        signIn: '/login',
+    },
     debug: true,
-    // callbacks: {
-    //     async jwt({ token, account }) {
-    //         // Persist the OAuth access_token to the token right after signin
-    //         if (account) {
-    //             token.accessToken = account.access_token
-    //         }
-    //         return token
-    //     },
-    //     async session({ session, token, user }) {
-    //         // Send properties to the client, like an access_token from a provider.
-    //         session.accessToken = token.accessToken
-    //         return session
-    //     },
-    // },
+    callbacks: {
+        async jwt({ token, account, user }) {
+            // Persist the OAuth access_token to the token right after signin
+            if (account && user) {
+                token.accessToken = account.access_token
+            }
+            return token
+        },
+        async session({ session, token }) {
+            // Send properties to the client, like an access_token from a provider.
+            session.accessToken = token.accessToken
+            return session
+        },
+    },
 })
