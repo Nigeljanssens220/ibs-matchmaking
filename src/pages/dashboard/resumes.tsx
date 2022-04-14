@@ -4,7 +4,7 @@ import React from 'react'
 
 type Props = {}
 
-const Resources: NextPage = () => {
+const Resumes: NextPage = () => {
     return (
         <div className="flex items-start justify-between">
             <Sidebar />
@@ -12,4 +12,4 @@ const Resources: NextPage = () => {
     )
 }
 
-export default Resources
+export default Resumes

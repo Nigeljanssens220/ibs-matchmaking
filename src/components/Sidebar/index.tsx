@@ -1,34 +1,33 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import { classNames } from '@/utils/styling'
 import {
+    AcademicCapIcon,
     BriefcaseIcon,
     CogIcon,
-    FolderIcon,
     HomeIcon,
 } from '@heroicons/react/solid'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { FC, ReactNode } from 'react'
-import NavLink from '../NavLink'
 import Typography from '../Typography'
 
 const items = [
     {
         label: 'Home',
         href: '/dashboard',
+        startIcon: <HomeIcon width={32} height={32} className="mx-5" />,
     },
     {
         label: 'Projects',
         href: '/dashboard/projects',
+        startIcon: <BriefcaseIcon width={32} height={32} className="mx-5" />,
     },
     {
-        label: 'Resources',
-        href: '/dashboard/resources',
+        label: 'Resumes',
+        href: '/dashboard/resumes',
+        startIcon: <AcademicCapIcon width={32} height={32} className="mx-5" />,
     },
-    {
-        label: 'Settings',
-        href: '/dashboard/settings',
-    },
+    // add more sidebar items here
 ]
 
 interface SidebarItemProps extends React.HTMLProps<HTMLAnchorElement> {
@@ -95,49 +94,13 @@ const Sidebar = () => {
                 </div>
                 <nav className="mt-6">
                     <div>
-                        <div className="flex">
-                            <SidebarItem
-                                href="/dashboard"
-                                startIcon={
-                                    <HomeIcon
-                                        width={32}
-                                        height={32}
-                                        className="mx-5"
-                                    />
-                                }
-                            >
-                                Home
-                            </SidebarItem>
-                        </div>
-                        <div className="flex">
-                            <SidebarItem
-                                href="/dashboard/projects"
-                                startIcon={
-                                    <BriefcaseIcon
-                                        width={32}
-                                        height={32}
-                                        className="mx-5"
-                                    />
-                                }
-                            >
-                                Projects
-                            </SidebarItem>
-                        </div>
-
-                        <div className="flex">
-                            <SidebarItem
-                                href="/dashboard/resources"
-                                startIcon={
-                                    <FolderIcon
-                                        width={32}
-                                        height={32}
-                                        className="mx-5"
-                                    />
-                                }
-                            >
-                                Resources
-                            </SidebarItem>
-                        </div>
+                        {items.map(({ label, href, startIcon }) => (
+                            <div className="flex" key={label}>
+                                <SidebarItem href={href} startIcon={startIcon}>
+                                    {label}
+                                </SidebarItem>
+                            </div>
+                        ))}
                     </div>
                 </nav>
                 <div className="absolute bottom-0 border-t-2 border-white w-full flex">
