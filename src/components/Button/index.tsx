@@ -6,13 +6,19 @@ export interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
     className?: string
 }
 
-const Button: FC<ButtonProps> = ({ children, className, onClick }) => {
+const Button: FC<ButtonProps> = ({
+    children,
+    className,
+    onClick,
+    disabled,
+}) => {
     return (
         <div>
             <button
                 className={classNames(
                     className,
-                    'text-zinc-700 font-medium bg-white hover:bg-zinc-800 hover:text-white hover:ring-white hover:ring-2 py-2 px-4 rounded'
+                    'text-zinc-700 font-medium bg-white hover:bg-zinc-800 hover:text-white hover:ring-white hover:ring-2 py-2 px-4 rounded',
+                    disabled ? 'opacity-50 pointer-events-none' : ''
                 )}
                 onClick={onClick}
             >
