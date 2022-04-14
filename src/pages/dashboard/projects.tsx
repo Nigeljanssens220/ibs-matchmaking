@@ -5,7 +5,11 @@ import React from 'react'
 type Props = {}
 
 const Projects: NextPage = () => {
-    return <Sidebar />
+    return (
+        <div className="flex items-start justify-between">
+            <Sidebar />
+        </div>
+    )
 }
 
 export default Projects

@@ -80,8 +80,8 @@ const SidebarItem: FC<SidebarItemProps> = ({
 const Sidebar = () => {
     return (
         <div className="h-screen hidden lg:block shadow-lg relative w-80">
-            <div className="h-full bg-gray-700 ">
-                <div className="flex items-center justify-start pt-6 ml-8">
+            <div className="h-full bg-gradient-to-br from-cyan-700/50 to-cyan-900">
+                <div className="flex items-center justify-start pt-6 ml-12">
                     <Link href="/" passHref>
                         <Typography
                             component="p"
@@ -102,7 +102,7 @@ const Sidebar = () => {
                                     <HomeIcon
                                         width={32}
                                         height={32}
-                                        className="mr-5"
+                                        className="mx-5"
                                     />
                                 }
                             >
@@ -116,7 +116,7 @@ const Sidebar = () => {
                                     <BriefcaseIcon
                                         width={32}
                                         height={32}
-                                        className="mr-5"
+                                        className="mx-5"
                                     />
                                 }
                             >
@@ -131,7 +131,7 @@ const Sidebar = () => {
                                     <FolderIcon
                                         width={32}
                                         height={32}
-                                        className="mr-5"
+                                        className="mx-5"
                                     />
                                 }
                             >
@@ -144,7 +144,7 @@ const Sidebar = () => {
                     <SidebarItem
                         href="/dashboard/settings"
                         startIcon={
-                            <CogIcon width={32} height={32} className="mr-5" />
+                            <CogIcon width={32} height={32} className="mx-5" />
                         }
                     >
                         Settings
