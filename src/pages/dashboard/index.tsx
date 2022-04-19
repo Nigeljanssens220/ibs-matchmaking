@@ -11,11 +11,11 @@ const Dashboard: NextPage = () => {
                 <div className="flex flex-col w-full md:space-y-4">
                     <header className="w-full h-16 z-40 flex items-center justify-between">
                         <div className="block lg:hidden ml-6">
-                            <button className="flex p-2 items-center rounded-full bg-white shadow text-gray-500 text-md">
+                            <button className="flex p-2 items-center rounded-full bg-white shadow text-green-500 text-md">
                                 <svg
                                     width="20"
                                     height="20"
-                                    className="text-gray-400"
+                                    className="text-green-400"
                                     fill="currentColor"
                                     viewBox="0 0 1792 1792"
                                     xmlns="http://www.w3.org/2000/svg"
