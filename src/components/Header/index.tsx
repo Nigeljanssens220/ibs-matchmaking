@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { FC } from 'react'
 import Button from '../Button'
+import Menu from '../Menu'
 import Typography from '../Typography'
 import NavBarMenu from './Menu'
 
@@ -11,31 +12,33 @@ const Header: FC = () => {
     }
 
     return (
-        <header className="flex justify-between items-center lg:mx-auto bg-gradient-to-b from-zinc-900 to-zinc-800/90 text-zinc-100">
+        <header className="flex justify-between items-center lg:mx-auto bg-gradient-to-b from-zinc-900 to-zinc-800 text-zinc-100 ">
             <div className="flex flex-grow max-w-screen-2xl justify-between items-center mx-auto py-6 px-4 sm:px-6 lg:px-8 ">
-                <div className="flex hover:cursor-pointer ">
+                <div className="flex items-center hover:cursor-pointer ">
                     <Link href="#" passHref>
-                        <Image
-                            src="/logo.png"
-                            alt="IBS Logo"
-                            width={30}
-                            height={30}
-                            objectFit="contain"
-                        />
+                        <div className="hidden lg:block">
+                            <Image
+                                src="/logo.png"
+                                alt="IBS Logo"
+                                width={35}
+                                height={35}
+                                objectFit="contain"
+                            />
+                        </div>
                     </Link>
                     <Link href="#" passHref>
                         <Typography
                             weight="medium"
-                            variant="h3"
+                            variant="lg"
                             component="a"
-                            className="px-5"
+                            className="px-5 md:text-2xl lg:text-3xl"
                         >
                             Isatis Business Solutions
                         </Typography>
                     </Link>
                 </div>
                 <div className="">
-                    <NavBarMenu />
+                    <Menu />
                 </div>
             </div>
         </header>

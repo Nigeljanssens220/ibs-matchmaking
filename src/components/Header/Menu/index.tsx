@@ -6,9 +6,11 @@ import {
     CogIcon,
     PencilIcon,
     BookOpenIcon,
+    AcademicCapIcon,
 } from '@heroicons/react/solid'
 import Button from '@/components/Button'
 import { signIn, signOut, useSession } from 'next-auth/react'
+import NavLink from '@/components/NavLink'
 
 const NavBarMenu: FC = () => {
     const { data: session } = useSession()
@@ -47,30 +49,33 @@ const NavBarMenu: FC = () => {
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                     >
-                        <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Items className="absolute bg-white divide-y right-0 w-56 mt-2 origin-top-right divide-gray-200 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <div className="px-1 py-1 ">
                                 <Menu.Item>
                                     {({ active }) => (
-                                        <button
+                                        <NavLink
+                                            href="/dashboard"
+                                            startIcon={
+                                                active ? (
+                                                    <AcademicCapIcon
+                                                        className="w-5 h-5 mr-10 text-white"
+                                                        aria-hidden="true"
+                                                    />
+                                                ) : (
+                                                    <AcademicCapIcon
+                                                        className="w-5 h-5 mr-10 text-black hover:text-yellow-600"
+                                                        aria-hidden="true"
+                                                    />
+                                                )
+                                            }
                                             className={`${
                                                 active
                                                     ? 'bg-zinc-500 text-white font-semibold'
-                                                    : 'text-gray-900'
+                                                    : ''
                                             } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                                         >
-                                            {active ? (
-                                                <PencilIcon
-                                                    className="w-5 h-5 mr-2 text-white"
-                                                    aria-hidden="true"
-                                                />
-                                            ) : (
-                                                <PencilIcon
-                                                    className="w-5 h-5 mr-2 text-black"
-                                                    aria-hidden="true"
-                                                />
-                                            )}
-                                            Edit
-                                        </button>
+                                            Dashboard
+                                        </NavLink>
                                     )}
                                 </Menu.Item>
                             </div>
