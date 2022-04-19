@@ -59,7 +59,7 @@ const StatCards: FC<StatCardProps> = ({
                                         {statKey2}
                                     </Typography>
                                     <Typography
-                                        className="order-1  text-yellow-400 "
+                                        className="order-1 border-t text-yellow-400 "
                                         variant="lg"
                                         component="dd"
                                         weight="bold"
@@ -67,22 +67,22 @@ const StatCards: FC<StatCardProps> = ({
                                         {statValue2}
                                     </Typography>
                                 </div>
-                                <div className="flex flex-col border-t border-zinc-200 p-6 text-center sm:border-0 sm:border-l">
+                                <div className="flex flex-col border-t border-zinc-400 p-6 text-center sm:border-0 sm:border-l">
                                     <Typography
-                                        className="order-2 mt-2 leading-6 text-zinc-800"
-                                        variant="base"
-                                        weight="medium"
-                                        component="dt"
-                                    >
-                                        {statKey3}
-                                    </Typography>
-                                    <Typography
-                                        className="order-1  text-yellow-400 "
+                                        className="text-yellow-400 "
                                         variant="lg"
                                         component="dd"
                                         weight="bold"
                                     >
                                         {statValue3}
+                                    </Typography>
+                                    <Typography
+                                        className="mt-2 leading-6 text-zinc-800"
+                                        variant="base"
+                                        weight="medium"
+                                        component="dt"
+                                    >
+                                        {statKey3}
                                     </Typography>
                                 </div>
                             </dl>
