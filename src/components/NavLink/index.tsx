@@ -23,12 +23,18 @@ const NavLink: FC<SidebarItemProps> = ({
     return (
         <Link href={href} passHref>
             <a
+                // className={classNames(
+                //     className,
+                //     isActive
+                //         ? 'text-white border-l-4 border-yellow-500 pointer-events-none '
+                //         : 'text-gray-400 hover:text-yellow-500/80',
+                //     'w-full flex items-center p-2 my-2 transition-colors duration-400 justify-start '
+                // )}
+                // href="#"
                 className={classNames(
                     className,
-                    isActive
-                        ? 'text-white border-l-4 border-yellow-500 pointer-events-none '
-                        : 'text-gray-400 hover:text-yellow-500/80',
-                    'w-full flex items-center pl-6 p-2 my-2 transition-colors duration-400 justify-start '
+                    isActive ? 'pointer-events-none ' : '',
+                    'w-full flex items-center p-2 transition-colors duration-400 '
                 )}
                 href="#"
             >
@@ -37,7 +43,7 @@ const NavLink: FC<SidebarItemProps> = ({
                     weight="medium"
                     variant="lg"
                     className={classNames(
-                        isActive ? 'text-xl ml-3 text-' : '',
+                        isActive ? 'text-xl' : '',
                         'flex items-center '
                     )}
                 >
