@@ -1,9 +1,8 @@
 import NextAuth from 'next-auth'
 import AzureADProvider from 'next-auth/providers/azure-ad'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
+import { prisma } from '@/backend/utils/prisma'
 
 export default NextAuth({
     adapter: PrismaAdapter(prisma),
