@@ -14,7 +14,7 @@ const Dashboard: NextPage = () => {
             <div className="flex items-start justify-between">
                 <Sidebar label="MATCHIFY" items={SidebarItems} />
                 <div className="flex flex-col w-full ">
-                    <div className="flex items-center justify-between p-5 md:hidden bg-gray-700">
+                    <div className="flex items-center justify-between p-5 lg:hidden bg-gray-700">
                         <Typography variant="h3" weight="medium">
                             MATCHIFY
                         </Typography>
