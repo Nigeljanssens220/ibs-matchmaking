@@ -3,19 +3,42 @@ import React from 'react'
 
 import { useSession } from 'next-auth/react'
 import DashboardLayout from '@/components/Layout/Dashboard'
+import Table from '@/components/Table'
+
+const people = [
+    {
+        name: 'Gerard Draadjer',
+        title: 'Product Owner',
+        email: 'gerard.draadjer@isatis-business-solutions.nl',
+        role: 'Owner',
+    },
+    {
+        name: 'Furkan Unver',
+        title: 'Python Developer',
+        email: 'furkan.unver@isatis-business-solutions.nl',
+        role: 'Developer',
+    },
+    {
+        name: 'Simone Hartgring',
+        title: 'Machine Learning Engineer',
+        email: 'simone.hartgring@isatis-business-solutions.nl',
+        role: 'Developer',
+    },
+    {
+        name: 'Nigel Janssens',
+        title: 'Front-end Developer',
+        email: 'nigel.janssens@isatis-business-solutions.nl',
+        role: 'Developer',
+    },
+    // More people...
+]
 
 const Projects: NextPage = () => {
     const { data: session } = useSession()
-    console.log(session)
     return (
         <DashboardLayout>
             <div className="flex flex-col w-full p-5 h-screen">
-                <h1 className="text-4xl font-semibold text-white">
-                    Welcome back, {session?.user?.name?.split(' ')[0]}!
-                </h1>
-                <h2 className="text-md text-gray-400">
-                    Here&#x27;s what happened during your absence.
-                </h2>
+                <Table items={people} />
             </div>
         </DashboardLayout>
     )
