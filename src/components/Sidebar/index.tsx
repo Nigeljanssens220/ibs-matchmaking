@@ -2,11 +2,15 @@ import { CogIcon, LogoutIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import React, { FC } from 'react'
 import Typography from '../Typography'
-import SidebarItem from './SidebarItem'
-import { SidebarItems } from '@/lib/DashboardSidebar'
+import SidebarItem, { SidebarItemProps } from './SidebarItem'
 import { signOut } from 'next-auth/react'
 
-const Sidebar: FC = () => {
+interface SidebarProps {
+    label: string
+    items: SidebarItemProps[]
+}
+
+const Sidebar: FC<SidebarProps> = ({ label, items }) => {
     const handleLogout = () => {
         signOut({ callbackUrl: '/' })
     }
@@ -21,13 +25,13 @@ const Sidebar: FC = () => {
                             variant="h3"
                             weight="medium"
                         >
-                            IBS Matchmaking
+                            {label}
                         </Typography>
                     </Link>
                 </div>
                 <nav className="mt-6">
                     <div>
-                        {SidebarItems.map(({ label, href, startIcon }) => (
+                        {items.map(({ label, href, startIcon }) => (
                             <div className="flex" key={label}>
                                 <SidebarItem href={href} startIcon={startIcon}>
                                     {label}

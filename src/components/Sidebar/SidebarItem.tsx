@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { FC, ReactNode } from 'react'
 import Typography from '../Typography'
 
-interface SidebarItemProps extends React.HTMLProps<HTMLAnchorElement> {
+export interface SidebarItemProps extends React.HTMLProps<HTMLAnchorElement> {
     href: string
     children?: ReactNode
     className?: string

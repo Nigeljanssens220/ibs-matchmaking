@@ -1,6 +1,8 @@
 import Menu from '@/components/Menu'
 import Sidebar from '@/components/Sidebar'
+import Typography from '@/components/Typography'
 import { dashboardHeaders } from '@/lib/dashboardHeaders'
+import { SidebarItems } from '@/lib/DashboardSidebar'
 import { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import React from 'react'
@@ -10,9 +12,12 @@ const Dashboard: NextPage = () => {
     return (
         <main className="bg-gray-800 h-screen overflow-hidden relative">
             <div className="flex items-start justify-between">
-                <Sidebar />
+                <Sidebar label="MATCHIFY" items={SidebarItems} />
                 <div className="flex flex-col w-full ">
-                    <div className="flex justify-end p-5  md:hidden">
+                    <div className="flex items-center justify-between p-5 md:hidden bg-gray-700">
+                        <Typography variant="h3" weight="medium">
+                            MATCHIFY
+                        </Typography>
                         <Menu items={dashboardHeaders} />
                     </div>
                     <div className="overflow-auto no-scrollbar h-screen p-4 md:px-8 ">

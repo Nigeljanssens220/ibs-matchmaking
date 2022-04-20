@@ -5,7 +5,6 @@ import Button from '@/components/ButtonNew'
 import { MenuIcon, XIcon } from '@heroicons/react/solid'
 import NavLink from '../NavLink'
 import Typography from '../Typography'
-import { useRouter } from 'next/router'
 
 interface MenuItemProps
     extends React.DetailedHTMLProps<
@@ -18,9 +17,6 @@ interface MenuItemProps
 }
 
 const MenuItem: FC<MenuItemProps> = ({ children, href, ...rest }) => {
-    const router = useRouter()
-    const isActive = router.pathname === href
-
     return (
         <li
             {...rest}
@@ -33,9 +29,10 @@ const MenuItem: FC<MenuItemProps> = ({ children, href, ...rest }) => {
 
 interface MenuProps {
     items: Omit<MenuItemProps, 'children'>[]
+    className?: string
 }
 
-const Menu: FC<MenuProps> = ({ items }) => {
+const Menu: FC<MenuProps> = ({ items, className }) => {
     const [show, setShow] = useState(false)
     const { data: session } = useSession()
 

@@ -1,13 +1,12 @@
 import Sidebar from '@/components/Sidebar'
+import { SidebarItems } from '@/lib/DashboardSidebar'
 import { NextPage } from 'next'
 import React from 'react'
-
-type Props = {}
 
 const Resumes: NextPage = () => {
     return (
         <div className="flex items-start justify-between">
-            <Sidebar />
+            <Sidebar label="MATCHIFY" items={SidebarItems} />
         </div>
     )
 }
