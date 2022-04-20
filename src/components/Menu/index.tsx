@@ -16,7 +16,7 @@ const Menu: FC = () => {
         setShow(!show)
     }
     const handleLoginLogout = async () => {
-        session ? signOut() : signIn()
+        session ? signOut({ callbackUrl: '/' }) : signIn()
     }
 
     return (
