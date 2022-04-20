@@ -1,7 +1,6 @@
 import { classNames } from '@/utils/styling'
 import Link from 'next/link'
 import { FC, ReactNode } from 'react'
-import Typography from '../Typography'
 
 interface NavLinkProps extends React.HTMLProps<HTMLAnchorElement> {
     href: string
@@ -15,17 +14,10 @@ const NavLink: FC<NavLinkProps> = ({ href, children, className }) => {
             <a
                 className={classNames(
                     className,
-                    'w-full flex items-center p-2 transition-colors duration-400 '
+                    'w-full flex items-center transition-colors duration-400 '
                 )}
             >
-                <Typography
-                    component="span"
-                    weight="medium"
-                    variant="lg"
-                    className={'flex items-center '}
-                >
-                    {children}
-                </Typography>
+                {children}
             </a>
         </Link>
     )
