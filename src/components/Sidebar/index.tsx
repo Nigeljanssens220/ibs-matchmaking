@@ -1,11 +1,15 @@
-import { CogIcon } from '@heroicons/react/solid'
+import { CogIcon, LogoutIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import React, { FC } from 'react'
 import Typography from '../Typography'
 import SidebarItem from './SidebarItem'
 import { SidebarItems } from '@/lib/DashboardSidebar'
+import { signOut } from 'next-auth/react'
 
 const Sidebar: FC = () => {
+    const handleLogout = () => {
+        signOut({ callbackUrl: '/' })
+    }
     return (
         <div className="h-screen hidden lg:block shadow-lg relative w-80">
             <div className="h-full bg-gray-700">
@@ -44,6 +48,28 @@ const Sidebar: FC = () => {
                         >
                             Settings
                         </SidebarItem>
+                        <div>
+                            <button
+                                onClick={handleLogout}
+                                className={
+                                    'text-gray-400 hover:text-yellow-500/80 w-full flex items-center p-2 my-2 transition-colors duration-400 justify-start '
+                                }
+                            >
+                                <Typography
+                                    component="span"
+                                    weight="medium"
+                                    variant="lg"
+                                    className={'flex items-center '}
+                                >
+                                    <LogoutIcon
+                                        width={32}
+                                        height={32}
+                                        className="mx-5"
+                                    />
+                                    Logout
+                                </Typography>
+                            </button>
+                        </div>
                     </div>
                 </nav>
             </div>

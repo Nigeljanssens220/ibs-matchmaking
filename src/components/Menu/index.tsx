@@ -24,7 +24,7 @@ const Menu: FC = () => {
             <div>
                 <button
                     onClick={handleClick}
-                    className="block md:hidden lg:hidden text-black hover:text-gray-700 focus:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                    className="block md:hidden text-black hover:text-gray-700 focus:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
                 >
                     <MenuIcon
                         className="text-white m-2"
@@ -38,7 +38,7 @@ const Menu: FC = () => {
                 >
                     <button
                         onClick={handleClick}
-                        className="p-2 block md:hidden lg:hidden text-black hover:text-gray-700 focus:text-gray-700 fixed focus:outline-none focus:ring-2 focus:ring-gray-500 bg-white md:bg-transparent z-30 top-7 right-4"
+                        className="p-2 block md:hidden text-black hover:text-gray-700 focus:text-gray-700 fixed focus:outline-none focus:ring-2 focus:ring-gray-500 bg-white md:bg-transparent z-30 top-7 right-4"
                     >
                         <XIcon className="text-black " width={32} height={32} />
                     </button>

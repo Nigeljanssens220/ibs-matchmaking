@@ -15,7 +15,7 @@ const Dashboard: NextPage = () => {
                     <div className="flex justify-end p-5  md:hidden">
                         <Menu />
                     </div>
-                    <div className="overflow-auto h-screen p-4 md:px-8 border-4">
+                    <div className="overflow-auto no-scrollbar h-screen p-4 md:px-8 ">
                         <h1 className="text-4xl font-semibold text-white">
                             Welcome back, {session?.user?.name?.split(' ')[0]}!
                         </h1>
