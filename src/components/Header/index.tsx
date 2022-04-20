@@ -1,3 +1,4 @@
+import { headers } from '@/lib/headers'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { FC } from 'react'
@@ -32,7 +33,7 @@ const Header: FC = () => {
                     </Link>
                 </div>
                 <div className="">
-                    <Menu />
+                    <Menu items={headers} />
                 </div>
             </div>
         </header>

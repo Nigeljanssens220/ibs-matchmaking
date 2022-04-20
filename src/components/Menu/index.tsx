@@ -1,13 +1,41 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { FC, useState } from 'react'
+import React, { FC, ReactNode, useState } from 'react'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import Button from '@/components/ButtonNew'
 import { MenuIcon, XIcon } from '@heroicons/react/solid'
 import NavLink from '../NavLink'
 import Typography from '../Typography'
-import { headers } from '@/lib/headers'
+import { useRouter } from 'next/router'
 
-const Menu: FC = () => {
+interface MenuItemProps
+    extends React.DetailedHTMLProps<
+        React.LiHTMLAttributes<HTMLLIElement>,
+        HTMLLIElement
+    > {
+    href: string
+    children?: ReactNode
+    label?: string
+}
+
+const MenuItem: FC<MenuItemProps> = ({ children, href, ...rest }) => {
+    const router = useRouter()
+    const isActive = router.pathname === href
+
+    return (
+        <li
+            {...rest}
+            className="text-zinc-900 md:text-gray-200 hover:text-gray-500 cursor-pointer "
+        >
+            <NavLink href={href}>{children}</NavLink>
+        </li>
+    )
+}
+
+interface MenuProps {
+    items: Omit<MenuItemProps, 'children'>[]
+}
+
+const Menu: FC<MenuProps> = ({ items }) => {
     const [show, setShow] = useState(false)
     const { data: session } = useSession()
 
@@ -43,13 +71,10 @@ const Menu: FC = () => {
                         <XIcon className="text-black " width={32} height={32} />
                     </button>
                     <ul className="flex flex-col md:flex md:flex-row items-center justify-center fixed md:relative top-0 bottom-0 left-0 right-0 bg-white md:bg-transparent z-20 space-y-10 md:space-y-0 md:space-x-10">
-                        {headers.map(({ label, href }) => (
-                            <li
-                                className="text-zinc-900 md:text-gray-200 hover:text-gray-500 cursor-pointer "
-                                key={label}
-                            >
-                                <NavLink href={href}>{label}</NavLink>
-                            </li>
+                        {items.map(({ label, href }) => (
+                            <MenuItem key={label} href={href}>
+                                {label}
+                            </MenuItem>
                         ))}
                         <li className=" text-zinc-900 text-lg hover:text-gray-700 cursor-pointer ">
                             {session ? (

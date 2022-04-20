@@ -1,6 +1,6 @@
-/* eslint-disable @next/next/no-html-link-for-pages */
 import Menu from '@/components/Menu'
 import Sidebar from '@/components/Sidebar'
+import { dashboardHeaders } from '@/lib/dashboardHeaders'
 import { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import React from 'react'
@@ -13,7 +13,7 @@ const Dashboard: NextPage = () => {
                 <Sidebar />
                 <div className="flex flex-col w-full ">
                     <div className="flex justify-end p-5  md:hidden">
-                        <Menu />
+                        <Menu items={dashboardHeaders} />
                     </div>
                     <div className="overflow-auto no-scrollbar h-screen p-4 md:px-8 ">
                         <h1 className="text-4xl font-semibold text-white">
