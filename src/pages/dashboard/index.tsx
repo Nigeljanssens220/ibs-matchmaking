@@ -2,9 +2,11 @@
 import Menu from '@/components/Menu'
 import Sidebar from '@/components/Sidebar'
 import { NextPage } from 'next'
+import { useSession } from 'next-auth/react'
 import React from 'react'
 
 const Dashboard: NextPage = () => {
+    const { data: session } = useSession()
     return (
         <main className="bg-gray-800 h-screen overflow-hidden relative">
             <div className="flex items-start justify-between">
@@ -15,11 +17,10 @@ const Dashboard: NextPage = () => {
                     </div>
                     <div className="overflow-auto h-screen p-4 md:px-8 border-4">
                         <h1 className="text-4xl font-semibold text-white">
-                            Good afternoon, Charlie
+                            Welcome back, {session?.user?.name?.split(' ')[0]}!
                         </h1>
                         <h2 className="text-md text-gray-400">
-                            Here&#x27;s what&#x27;s happening with your
-                            ambassador account today.
+                            Here&#x27;s what happened during your absence.
                         </h2>
                         <div className="flex my-6 items-center w-full space-y-4 md:space-x-4 md:space-y-0 flex-col md:flex-row">
                             <div className="w-full md:w-6/12">

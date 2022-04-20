@@ -25,27 +25,27 @@ const Sidebar: FC = () => {
                     <div>
                         {SidebarItems.map(({ label, href, startIcon }) => (
                             <div className="flex" key={label}>
-                                <SidebarItem
-                                    href={href}
-                                    startIcon={startIcon}
-                                    className="active:border-l-4 border-yellow-500"
-                                >
+                                <SidebarItem href={href} startIcon={startIcon}>
                                     {label}
                                 </SidebarItem>
                             </div>
                         ))}
                     </div>
+                    <div className="absolute bottom-0 border-t-2 border-white w-full ">
+                        <SidebarItem
+                            href="/dashboard/settings"
+                            startIcon={
+                                <CogIcon
+                                    width={32}
+                                    height={32}
+                                    className="mx-5"
+                                />
+                            }
+                        >
+                            Settings
+                        </SidebarItem>
+                    </div>
                 </nav>
-                <div className="absolute bottom-0 border-t-2 border-white w-full flex">
-                    <SidebarItem
-                        href="/dashboard/settings"
-                        startIcon={
-                            <CogIcon width={32} height={32} className="mx-5" />
-                        }
-                    >
-                        Settings
-                    </SidebarItem>
-                </div>
             </div>
         </div>
     )
