@@ -5,6 +5,7 @@ import Button from '@/components/ButtonNew'
 import { MenuIcon, XIcon } from '@heroicons/react/solid'
 import NavLink from '../NavLink'
 import Typography from '../Typography'
+import { headers } from '@/lib/headers'
 
 const Menu: FC = () => {
     const [show, setShow] = useState(false)
@@ -33,9 +34,7 @@ const Menu: FC = () => {
                 </button>
                 <div
                     id="menu"
-                    className={`md:block lg:block ${
-                        show ? '' : 'hidden'
-                    } border-4 border-yellow-500`}
+                    className={`md:block lg:block ${show ? '' : 'hidden'} `}
                 >
                     <button
                         onClick={handleClick}
@@ -44,12 +43,14 @@ const Menu: FC = () => {
                         <XIcon className="text-black " width={32} height={32} />
                     </button>
                     <ul className="flex flex-col md:flex md:flex-row items-center justify-center fixed md:relative top-0 bottom-0 left-0 right-0 bg-white md:bg-transparent z-20 space-y-10 md:space-y-0 md:space-x-10">
-                        <li className="text-zinc-900 md:text-gray-200 hover:text-gray-700 cursor-pointer ">
-                            <NavLink href="/">Get started</NavLink>
-                        </li>
-                        <li className="text-zinc-900 md:text-gray-200 hover:text-gray-700 cursor-pointer ">
-                            <NavLink href="/dashboard">Dashboard</NavLink>
-                        </li>
+                        {headers.map(({ label, href }) => (
+                            <li
+                                className="text-zinc-900 md:text-gray-200 hover:text-gray-500 cursor-pointer "
+                                key={label}
+                            >
+                                <NavLink href={href}>{label}</NavLink>
+                            </li>
+                        ))}
                         <li className=" text-zinc-900 text-lg hover:text-gray-700 cursor-pointer ">
                             {session ? (
                                 <>

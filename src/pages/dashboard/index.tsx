@@ -9,11 +9,11 @@ const Dashboard: NextPage = () => {
         <main className="bg-gray-800 h-screen overflow-hidden relative">
             <div className="flex items-start justify-between">
                 <Sidebar />
-                <div className="flex flex-col w-full md:space-y-4">
-                    <div className="flex justify-end p-5 md:p-2 md:py-0 mr-5">
+                <div className="flex flex-col w-full ">
+                    <div className="flex justify-end p-5  md:hidden">
                         <Menu />
                     </div>
-                    <div className="overflow-auto h-screen px-4 md:px-6 border-4">
+                    <div className="overflow-auto h-screen p-4 md:px-8 border-4">
                         <h1 className="text-4xl font-semibold text-white">
                             Good afternoon, Charlie
                         </h1>
