@@ -8,8 +8,6 @@ import { FC } from 'react'
 import Link from 'next/link'
 
 const DashboardLayout: FC = ({ children }) => {
-    const { data: session } = useSession()
-
     return (
         <main className="bg-gray-800 h-screen overflow-hidden relative">
             <div className="flex flex-col w-full ">
