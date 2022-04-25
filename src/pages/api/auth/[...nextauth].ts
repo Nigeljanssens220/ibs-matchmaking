@@ -12,6 +12,11 @@ export default NextAuth({
             clientId: process.env.AZURE_AD_CLIENT_ID!,
             clientSecret: process.env.AZURE_AD_CLIENT_SECRET!,
             tenantId: process.env.AZURE_AD_TENANT_ID,
+            authorization: {
+                params: {
+                    scope: 'openid profile email api://7bd1bf0e-7c99-4ccf-ac03-913e53a9125a/access_as_user',
+                },
+            },
             // Custom profile that's returned from the Azure AD provider.
             // oid is used in backend to verify user.
             profile(profile) {
@@ -39,8 +44,6 @@ export default NextAuth({
     callbacks: {
         async jwt({ token, account, user, profile }) {
             // Persist the OAuth access_token to the token right after signin
-            console.log('WE ARE NOW HERE')
-
             if (account && user) {
                 token.accessToken = account.access_token
                 token.oid = profile!.oid

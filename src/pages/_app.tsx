@@ -6,7 +6,7 @@ import type { AppProps } from 'next/app'
 function MyApp({ Component, pageProps }: AppProps) {
     return (
         <>
-            <SessionProvider session={pageProps.session} refetchInterval={0}>
+            <SessionProvider session={pageProps.session}>
                 <Head>
                     <title>Matchmaking - Isatis Business Solutions</title>
                     <link rel="favicon" href="/favicon.ico" />

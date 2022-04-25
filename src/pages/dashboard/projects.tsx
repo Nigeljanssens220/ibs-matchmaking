@@ -1,10 +1,12 @@
 import type { NextPage } from 'next'
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { useSession } from 'next-auth/react'
+const axios = require('axios').default
 
 import DashboardLayout from '@/components/Layout/Dashboard'
 import Table from '@/components/Table'
+import { setEnvironmentData } from 'worker_threads'
 
 const people = [
     {
@@ -35,17 +37,26 @@ const people = [
 ]
 
 const Projects: NextPage = () => {
-    const { data: session } = useSession()
-    console.log(session)
-    // const fetchOptions = {
-    //     headers: `Bearer ${session!.accessToken}`,
-    //     authInfo: {
-    //         name: session!.user!.name,
-    //         oid: session!.user!.oid,
-    //     },
-    // }
-    // const fetcher = (url: RequestInfo) => fetch(url).then((res) => res.json())
-    // const { data, error } = useSWR('/api/projects', fetcher)
+    const { data: session, status } = useSession()
+
+    const fetcher = (url: string, token: string) =>
+        axios
+            .get(url, { headers: { Authorization: `Bearer ${token}` } })
+            .then((res: { data: any }) => res.data)
+
+    const { data, error, mutate } = useSWR(
+        status !== 'authenticated'
+            ? null
+            : [
+                  'https://ibs-matchmaking-api.azurewebsites.net/readProjects',
+                  session!.accessToken,
+              ],
+        fetcher,
+        {
+            refreshInterval: 1000 * 60 * 30, // revalidate after 30 minutes
+            revalidateOnFocus: false,
+        }
+    )
 
     return (
         <DashboardLayout>
