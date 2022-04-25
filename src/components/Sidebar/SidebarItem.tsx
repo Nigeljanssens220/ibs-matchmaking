@@ -26,7 +26,7 @@ const SidebarItem: FC<SidebarItemProps> = ({
                 className={classNames(
                     className,
                     isActive
-                        ? 'text-white border-l-4 border-yellow-500 pointer-events-none '
+                        ? 'text-white border-l-4 border-yellow-500 pointer-events-none bg-yellow-300/30 rounded '
                         : 'text-gray-400 hover:text-yellow-500/80',
                     'w-full flex items-center p-2 my-2 transition-colors duration-400 justify-start '
                 )}
@@ -34,7 +34,7 @@ const SidebarItem: FC<SidebarItemProps> = ({
                 <Typography
                     component="span"
                     weight="medium"
-                    variant="lg"
+                    variant="base"
                     className={classNames(
                         isActive ? 'text-xl' : '',
                         'flex items-center '

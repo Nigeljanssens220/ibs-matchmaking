@@ -62,7 +62,7 @@ const Sidebar: FC<SidebarProps> = ({ label, items }) => {
                                 <Typography
                                     component="span"
                                     weight="medium"
-                                    variant="lg"
+                                    variant="base"
                                     className={'flex items-center '}
                                 >
                                     <LogoutIcon
