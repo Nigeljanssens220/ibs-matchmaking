@@ -2,6 +2,7 @@ import {
     AcademicCapIcon,
     BriefcaseIcon,
     HomeIcon,
+    UserIcon,
 } from '@heroicons/react/solid'
 
 export const SidebarItems = [
@@ -20,6 +21,9 @@ export const SidebarItems = [
         href: '/dashboard/resumes',
         startIcon: <AcademicCapIcon width={32} height={32} className="mx-5" />,
     },
-
-    // add more sidebar items here
+    {
+        label: 'Profile',
+        href: '/profile',
+        startIcon: <UserIcon width={32} height={32} className="mx-5" />,
+    },
 ]

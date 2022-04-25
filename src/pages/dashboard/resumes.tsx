@@ -1,5 +1,5 @@
 import DashboardLayout from '@/components/Layout/Dashboard'
-import Sidebar from '@/components/Sidebar'
+import Sidebar from 'old/sidebar'
 import { SidebarItems } from '@/lib/DashboardSidebar'
 import { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
