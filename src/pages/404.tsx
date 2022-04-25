@@ -1,6 +1,4 @@
 import { NextPage } from 'next'
-import Image from 'next/image'
-import React from 'react'
 
 const NotFoundPage: NextPage = () => {
     return (
