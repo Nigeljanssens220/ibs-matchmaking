@@ -12,6 +12,16 @@ export default NextAuth({
             clientId: process.env.AZURE_AD_CLIENT_ID!,
             clientSecret: process.env.AZURE_AD_CLIENT_SECRET!,
             tenantId: process.env.AZURE_AD_TENANT_ID,
+            // Custom profile that's returned from the Azure AD provider.
+            // oid is used in backend to verify user.
+            profile(profile) {
+                return {
+                    id: profile.sub,
+                    name: profile.name,
+                    email: profile.email,
+                    oid: profile.oid,
+                }
+            },
         }),
         // ...add more providers here
     ],

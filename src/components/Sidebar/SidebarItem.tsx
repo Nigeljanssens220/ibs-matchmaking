@@ -26,7 +26,7 @@ const SidebarItem: FC<SidebarItemProps> = ({
                 className={classNames(
                     className,
                     isActive
-                        ? 'text-white border-l-4 border-yellow-500 pointer-events-none bg-yellow-300/30 rounded '
+                        ? 'text-white border-l-4 border-yellow-500 pointer-events-none bg-yellow-300/50 rounded '
                         : 'text-gray-400 hover:text-yellow-500/80',
                     'w-full flex items-center p-2 my-2 transition-colors duration-400 justify-start '
                 )}

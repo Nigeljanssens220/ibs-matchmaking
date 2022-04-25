@@ -7,9 +7,9 @@ const Dashboard: NextPage = () => {
     const { data: session } = useSession()
     return (
         <DashboardLayout>
-            <main className="flex-1 p-4 sm:p-6 lg:p-8">
+            <main className="flex-1 p-4 sm:p-6 lg:p-8 ">
                 <div className="">
-                    <div className="mx-auto py-4">
+                    <div className="mx-auto mb-4">
                         <Typography
                             component="h1"
                             variant="h1"
@@ -28,7 +28,7 @@ const Dashboard: NextPage = () => {
                             <h2 className="text-md text-gray-400">
                                 Here&#x27;s what happened during your absence.
                             </h2>
-                            <div className="flex my-6 items-center w-full space-y-4 md:space-x-4 md:space-y-0 flex-col md:flex-row">
+                            <div className="flex max-h-screen my-4 items-center w-full space-y-4 md:space-x-4 md:space-y-0 flex-col md:flex-row">
                                 <div className="w-full md:w-6/12">
                                     <div className="shadow-lg w-full bg-gray-700 relative overflow-hidden">
                                         <a
