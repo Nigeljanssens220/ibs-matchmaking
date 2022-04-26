@@ -7,7 +7,7 @@ const Hero: FC = () => {
     return (
         <div className="bg-zinc-800/90">
             <div className="flex flex-col items-center ">
-                <div className="max-w-2xl mx-auto text-center py-16 px-4 sm:py-20 sm:px-6 lg:px-8">
+                <div className="max-w-2xl mx-auto text-center py-16 px-4 sm:py-20 sm:px-6 lg:px-8 mt-20">
                     <Typography
                         weight="bold"
                         variant="h1"

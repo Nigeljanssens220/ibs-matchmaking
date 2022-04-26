@@ -1,9 +1,8 @@
 import NextAuth from 'next-auth'
 import AzureADProvider from 'next-auth/providers/azure-ad'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
+import { prisma } from '@/backend/utils/prisma'
 
 export default NextAuth({
     adapter: PrismaAdapter(prisma),
@@ -13,23 +12,49 @@ export default NextAuth({
             clientId: process.env.AZURE_AD_CLIENT_ID!,
             clientSecret: process.env.AZURE_AD_CLIENT_SECRET!,
             tenantId: process.env.AZURE_AD_TENANT_ID,
+            authorization: {
+                params: {
+                    scope: 'openid profile email api://7bd1bf0e-7c99-4ccf-ac03-913e53a9125a/access_as_user',
+                },
+            },
+            // Custom profile that's returned from the Azure AD provider.
+            // oid is used in backend to verify user.
+            profile(profile) {
+                return {
+                    id: profile.sub,
+                    name: profile.name,
+                    email: profile.email,
+                    oid: profile.oid,
+                }
+            },
         }),
         // ...add more providers here
     ],
-    secret: process.env.JWT_SECRET,
+    session: {
+        strategy: 'jwt',
+    },
+    jwt: {
+        secret: process.env.JWT_SECRET,
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+    },
+    pages: {
+        signIn: '/login',
+    },
     debug: true,
-    // callbacks: {
-    //     async jwt({ token, account }) {
-    //         // Persist the OAuth access_token to the token right after signin
-    //         if (account) {
-    //             token.accessToken = account.access_token
-    //         }
-    //         return token
-    //     },
-    //     async session({ session, token, user }) {
-    //         // Send properties to the client, like an access_token from a provider.
-    //         session.accessToken = token.accessToken
-    //         return session
-    //     },
-    // },
+    callbacks: {
+        async jwt({ token, account, user, profile }) {
+            // Persist the OAuth access_token to the token right after signin
+            if (account && user) {
+                token.accessToken = account.access_token
+                token.oid = profile!.oid
+            }
+            return token
+        },
+        async session({ session, token }) {
+            // Send properties to the client, like an access_token from a provider.
+            session.accessToken = token.accessToken
+            session.oid = token.oid
+            return session
+        },
+    },
 })

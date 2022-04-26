@@ -3,6 +3,9 @@ import Typography from '../Typography'
 import Link from 'next/link'
 import Image from 'next/image'
 
+import { documentationFooters, aboutFooters } from '@/lib/footers'
+import NavLink from '../NavLink'
+
 const Footer: FC = ({ children }) => {
     return (
         // center this div
@@ -11,253 +14,101 @@ const Footer: FC = ({ children }) => {
                 <div className="flex flex-col md:flex md:flex-row border-y border-zinc-400 pb-8 text-center ">
                     <div className="w-full  mb-8 lg:mb-0 flex flex-1 ">
                         <div className="w-full px-6 ">
-                            <ul className="space-y-3 lg:space-y-1 ">
+                            <ul className="space-y-3 lg:space-y-1 items-center flex flex-col text-white">
                                 <li className="mt-6">
                                     <Typography
                                         component="span"
                                         variant="sm"
                                         weight="bold"
-                                        className="md:text-base"
+                                        className="md:text-lg"
                                     >
                                         Documentation
                                     </Typography>
                                 </li>
-                                <li>
-                                    <Link href="/" passHref>
-                                        <Typography
-                                            component="a"
-                                            variant="xs"
-                                            weight="thin"
-                                            className="md:text-sm leading-none"
-                                        >
-                                            Getting started
-                                        </Typography>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/" passHref>
-                                        <Typography
-                                            component="a"
-                                            variant="xs"
-                                            weight="thin"
-                                            className="md:text-sm leading-none"
-                                        >
-                                            How it works
-                                        </Typography>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/" passHref>
-                                        <Typography
-                                            component="a"
-                                            variant="xs"
-                                            weight="thin"
-                                            className="md:text-sm leading-none"
-                                        >
-                                            Blog
-                                        </Typography>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/" passHref>
-                                        <Typography
-                                            component="a"
-                                            variant="xs"
-                                            weight="thin"
-                                            className="md:text-sm leading-none"
-                                        >
-                                            Frequently asked questions
-                                        </Typography>
-                                    </Link>
-                                </li>
+                                {documentationFooters.map(({ label, href }) => (
+                                    <li
+                                        className="text-gray-200 hover:text-gray-500 cursor-pointer "
+                                        key={label}
+                                    >
+                                        <NavLink href={href} className="">
+                                            {label}
+                                        </NavLink>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                         <div className="w-full px-6 ">
-                            <ul className="space-y-3 lg:space-y-1">
+                            <ul className="space-y-3 lg:space-y-1 items-center flex flex-col text-white">
                                 <li className="mt-6">
                                     <Typography
                                         component="span"
                                         variant="sm"
                                         weight="bold"
-                                        className="md:text-base"
+                                        className="md:text-lg"
                                     >
                                         About us
                                     </Typography>
                                 </li>
-                                <li>
-                                    <Link href="/" passHref>
-                                        <Typography
-                                            component="a"
-                                            variant="xs"
-                                            weight="thin"
-                                            className="md:text-sm leading-none"
-                                        >
-                                            Our company and values
-                                        </Typography>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/" passHref>
-                                        <Typography
-                                            component="a"
-                                            variant="xs"
-                                            weight="thin"
-                                            className="md:text-sm leading-none"
-                                        >
-                                            Terms of service
-                                        </Typography>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/" passHref>
-                                        <Typography
-                                            component="a"
-                                            variant="xs"
-                                            weight="thin"
-                                            className="md:text-sm leading-none"
-                                        >
-                                            Privacy policy
-                                        </Typography>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/" passHref>
-                                        <Typography
-                                            component="a"
-                                            variant="xs"
-                                            weight="thin"
-                                            className="md:text-sm leading-none"
-                                        >
-                                            Cookie policy
-                                        </Typography>
-                                    </Link>
-                                </li>
+                                {aboutFooters.map(({ label, href }) => (
+                                    <li
+                                        className="text-gray-200 hover:text-gray-500 cursor-pointer "
+                                        key={label}
+                                    >
+                                        <NavLink href={href} className="">
+                                            {label}
+                                        </NavLink>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                     </div>
-                    <div className="w-full mb-8 lg:mb-0 flex flex-1">
+                    <div className="w-full  mb-8 lg:mb-0 flex flex-1 ">
                         <div className="w-full px-6 ">
-                            <ul className="space-y-3 lg:space-y-1">
+                            <ul className="space-y-3 lg:space-y-1 items-center flex flex-col text-white">
                                 <li className="mt-6">
                                     <Typography
                                         component="span"
                                         variant="sm"
                                         weight="bold"
-                                        className="md:text-base"
+                                        className="md:text-lg"
                                     >
                                         Documentation
                                     </Typography>
                                 </li>
-                                <li>
-                                    <Link href="/" passHref>
-                                        <Typography
-                                            component="a"
-                                            variant="xs"
-                                            weight="thin"
-                                            className="md:text-sm leading-none"
-                                        >
-                                            Getting started
-                                        </Typography>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/" passHref>
-                                        <Typography
-                                            component="a"
-                                            variant="xs"
-                                            weight="thin"
-                                            className="md:text-sm leading-none"
-                                        >
-                                            How it works
-                                        </Typography>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/" passHref>
-                                        <Typography
-                                            component="a"
-                                            variant="xs"
-                                            weight="thin"
-                                            className="md:text-sm leading-none"
-                                        >
-                                            Blog
-                                        </Typography>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/" passHref>
-                                        <Typography
-                                            component="a"
-                                            variant="xs"
-                                            weight="thin"
-                                            className="md:text-sm leading-none"
-                                        >
-                                            Frequently asked questions
-                                        </Typography>
-                                    </Link>
-                                </li>
+                                {documentationFooters.map(({ label, href }) => (
+                                    <li
+                                        className="text-gray-200 hover:text-gray-500 cursor-pointer "
+                                        key={label}
+                                    >
+                                        <NavLink href={href} className="">
+                                            {label}
+                                        </NavLink>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                         <div className="w-full px-6 ">
-                            <ul className="space-y-3 lg:space-y-1">
+                            <ul className="space-y-3 lg:space-y-1 items-center flex flex-col text-white">
                                 <li className="mt-6">
                                     <Typography
                                         component="span"
                                         variant="sm"
                                         weight="bold"
-                                        className="md:text-base"
+                                        className="md:text-lg"
                                     >
                                         About us
                                     </Typography>
                                 </li>
-                                <li>
-                                    <Link href="/" passHref>
-                                        <Typography
-                                            component="a"
-                                            variant="xs"
-                                            weight="thin"
-                                            className="md:text-sm leading-none"
-                                        >
-                                            Our company and values
-                                        </Typography>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/" passHref>
-                                        <Typography
-                                            component="a"
-                                            variant="xs"
-                                            weight="thin"
-                                            className="md:text-sm leading-none"
-                                        >
-                                            Terms of service
-                                        </Typography>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/" passHref>
-                                        <Typography
-                                            component="a"
-                                            variant="xs"
-                                            weight="thin"
-                                            className="md:text-sm leading-none"
-                                        >
-                                            Privacy policy
-                                        </Typography>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/" passHref>
-                                        <Typography
-                                            component="a"
-                                            variant="xs"
-                                            weight="thin"
-                                            className="md:text-sm leading-none"
-                                        >
-                                            Cookie policy
-                                        </Typography>
-                                    </Link>
-                                </li>
+                                {aboutFooters.map(({ label, href }) => (
+                                    <li
+                                        className="text-gray-200 hover:text-gray-500 cursor-pointer "
+                                        key={label}
+                                    >
+                                        <NavLink href={href} className="">
+                                            {label}
+                                        </NavLink>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                     </div>
