@@ -1,12 +1,13 @@
-import type { NextPage } from 'next'
-import React, { useCallback, useEffect, useState } from 'react'
-import useSWR from 'swr'
 import { useSession } from 'next-auth/react'
-const axios = require('axios').default
+import useSWRImmutable from 'swr/immutable'
+import type { NextPage } from 'next'
 
 import DashboardLayout from '@/components/Layout/Dashboard'
+import Container from '@/components/Container'
 import Table from '@/components/Table'
-import { setEnvironmentData } from 'worker_threads'
+import { useState } from 'react'
+
+const axios = require('axios').default
 
 const people = [
     {
@@ -37,31 +38,33 @@ const people = [
 ]
 
 const Projects: NextPage = () => {
+    console.log('rerender')
     const { data: session, status } = useSession()
+    const [projects, setProjects] = useState([])
 
     const fetcher = (url: string, token: string) =>
         axios
             .get(url, { headers: { Authorization: `Bearer ${token}` } })
+            .then((res: { data: any }) => console.log(res.data))
             .then((res: { data: any }) => res.data)
 
-    const { data, error, mutate } = useSWR(
+    const { data, error, mutate } = useSWRImmutable(
         status !== 'authenticated'
             ? null
             : [
                   'https://ibs-matchmaking-api.azurewebsites.net/readProjects',
                   session!.accessToken,
               ],
-        fetcher,
-        {
-            refreshInterval: 1000 * 60 * 30, // revalidate after 30 minutes
-            revalidateOnFocus: false,
-        }
+        fetcher
     )
 
     return (
         <DashboardLayout>
-            <div className="flex flex-col w-full p-5 h-screen">
-                <Table items={people} />
+            <div className="flex flex-col w-full p-5 h-screen border space-y-2">
+                <div className="hidden md:block">
+                    <Table items={people} />
+                </div>
+                {projects && projects.map((project) => JSON.stringify(project))}
             </div>
         </DashboardLayout>
     )
