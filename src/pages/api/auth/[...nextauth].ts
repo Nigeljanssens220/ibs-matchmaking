@@ -14,7 +14,7 @@ export default NextAuth({
             tenantId: process.env.AZURE_AD_TENANT_ID,
             authorization: {
                 params: {
-                    scope: 'openid profile email api://7bd1bf0e-7c99-4ccf-ac03-913e53a9125a/access_as_user',
+                    scope: process.env.AZURE_AD_SCOPE,
                 },
             },
             // Custom profile that's returned from the Azure AD provider.
