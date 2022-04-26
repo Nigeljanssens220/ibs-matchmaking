@@ -11,8 +11,8 @@ const Login: NextPage = () => {
     }
 
     return (
-        <div className="h-screen bg-gradient-to-tl from-cyan-900 to-fuchsia-700/40 w-full py-40 px-16">
-            <div className="flex flex-col items-center justify-center">
+        <div className="h-screen bg-gradient-to-tl from-cyan-900 to-fuchsia-700/40 w-full p-8 md:pt-24">
+            <div className="flex flex-col items-center justify-center text-center">
                 <Image
                     src="/logo.png"
                     alt="IBS Logo"
@@ -20,7 +20,12 @@ const Login: NextPage = () => {
                     height={40}
                     objectFit="contain"
                 />
-                <Typography variant="h2" weight="bold" className="mt-5">
+                <Typography
+                    variant="h2"
+                    weight="bold"
+                    component="h2"
+                    className="mt-5"
+                >
                     Isatis Business Solutions
                 </Typography>
                 <div className="flex flex-col space-y-2 bg-white shadow rounded-xl lg:w-1/3  md:w-1/2 w-full p-10 mt-16 text-center">
@@ -41,7 +46,7 @@ const Login: NextPage = () => {
                         Dont have account?{' '}
                         <Typography
                             component="span"
-                            className="text-semibold leading-none text-gray-600 underline"
+                            className="text-semibold leading-none text-gray-600 underline cursor-pointer"
                         >
                             Sign up here
                         </Typography>
