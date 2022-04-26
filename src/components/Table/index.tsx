@@ -1,45 +1,11 @@
 import { FC } from 'react'
 
-const people = [
-    {
-        name: 'Gerard Draadjer',
-        title: 'Product Owner',
-        email: 'gerard.draadjer@isatis-business-solutions.nl',
-        role: 'Owner',
-    },
-    {
-        name: 'Furkan Unver',
-        title: 'Python Developer',
-        email: 'furkan.unver@isatis-business-solutions.nl',
-        role: 'Developer',
-    },
-    {
-        name: 'Simone Hartgring',
-        title: 'Machine Learning Engineer',
-        email: 'simone.hartgring@isatis-business-solutions.nl',
-        role: 'Developer',
-    },
-    {
-        name: 'Nigel Janssens',
-        title: 'Front-end Developer',
-        email: 'nigel.janssens@isatis-business-solutions.nl',
-        role: 'Developer',
-    },
-    // More people...
-]
-
-interface TableItemProps {
-    name: string
-    title: string
-    email: string
-    role: string
-}
-
 interface TableProps {
-    items: TableItemProps[]
+    items: Project[]
+    headers: string[]
 }
 
-const Table: FC<TableProps> = ({ items }) => {
+const Table: FC<TableProps> = ({ items, headers }) => {
     return (
         <>
             <div className="sm:flex sm:items-center">
@@ -52,14 +18,6 @@ const Table: FC<TableProps> = ({ items }) => {
                         name, title, email and role.
                     </p>
                 </div>
-                <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <button
-                        type="button"
-                        className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-                    >
-                        Add user
-                    </button>
-                </div>
             </div>
             <div className="mt-8 flex flex-col">
                 <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -68,30 +26,15 @@ const Table: FC<TableProps> = ({ items }) => {
                             <table className="min-w-full divide-y divide-gray-300">
                                 <thead className="bg-gray-700">
                                     <tr>
-                                        <th
-                                            scope="col"
-                                            className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-6"
-                                        >
-                                            Name
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-3 py-3.5 text-left text-sm font-semibold text-white"
-                                        >
-                                            Title
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-3 py-3.5 text-left text-sm font-semibold text-white"
-                                        >
-                                            Email
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-3 py-3.5 text-left text-sm font-semibold text-white"
-                                        >
-                                            Role
-                                        </th>
+                                        {headers.map((header: string) => (
+                                            <th
+                                                key={header}
+                                                scope="col"
+                                                className="py-3.5 pl-2 pr-3 text-left text-sm font-semibold text-white sm:pl-3"
+                                            >
+                                                {header}
+                                            </th>
+                                        ))}
                                         <th
                                             scope="col"
                                             className="relative py-3.5 pl-3 pr-4 sm:pr-6"
@@ -102,37 +45,34 @@ const Table: FC<TableProps> = ({ items }) => {
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody className="bg-gray-200">
+                                <tbody className="bg-gray-200 ">
                                     {items.map((item, itemIdx) => (
                                         <tr
-                                            key={item.email}
+                                            key={item.id}
                                             className={
                                                 itemIdx % 2 === 0
-                                                    ? undefined
-                                                    : 'bg-gray-300'
+                                                    ? 'bg-gray-400/50'
+                                                    : ''
                                             }
                                         >
-                                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                                {item.name}
+                                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 border border-black">
+                                                {item.job_title}
                                             </td>
-                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                {item.title}
+                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 border border-black">
+                                                {item.source}
                                             </td>
-                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                {item.email}
+                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 border border-black">
+                                                {item.employer}
                                             </td>
-                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                {item.role}
+                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 border border-black ">
+                                                {item.weekly_hours}
                                             </td>
-                                            <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                            <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 border border-black">
                                                 <a
-                                                    href="#"
+                                                    href={item.job_url}
                                                     className="text-indigo-600 hover:text-indigo-900"
                                                 >
-                                                    Edit
-                                                    <span className="sr-only">
-                                                        , {item.name}
-                                                    </span>
+                                                    View
                                                 </a>
                                             </td>
                                         </tr>
