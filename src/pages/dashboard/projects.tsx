@@ -37,6 +37,17 @@ const Projects: NextPage = () => {
     return (
         <DashboardLayout>
             <div className="flex flex-col w-full p-5 space-y-2">
+                <div className="sm:flex sm:items-center">
+                    <div className="sm:flex-auto">
+                        <h1 className="text-xl font-semibold text-gray-200">
+                            Projects
+                        </h1>
+                        <p className="mt-2 text-sm text-gray-300">
+                            A list of all the users in your account including
+                            their name, title, email and role.
+                        </p>
+                    </div>
+                </div>
                 <div className="hidden md:block">
                     {data?.projects && (
                         <Table items={data?.projects} headers={headers} />
