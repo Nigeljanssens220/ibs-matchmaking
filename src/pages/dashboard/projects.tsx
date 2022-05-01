@@ -1,19 +1,20 @@
-import { useSession } from 'next-auth/react'
-import useSWRImmutable from 'swr/immutable'
-import type { NextPage } from 'next'
-import { useCallback, useEffect, useState } from 'react'
-import { ExternalLinkIcon } from '@heroicons/react/outline'
-
-import DashboardLayout from '@/components/Layout/Dashboard'
+import Button from '@/components/ButtonNew'
 import Container from '@/components/Container'
+import DashboardLayout from '@/components/Layout/Dashboard'
+import NavLink from '@/components/NavLink'
 import Table from '@/components/Table'
 import Typography from '@/components/Typography'
-import Button from '@/components/ButtonNew'
-import { useRouter } from 'next/router'
-import NavLink from '@/components/NavLink'
+import { ExternalLinkIcon } from '@heroicons/react/outline'
+import type { NextPage } from 'next'
+import { useSession } from 'next-auth/react'
+import useSWRImmutable from 'swr/immutable'
 
 const axios = require('axios').default
+
+// Table props for the projects page
 const headers = ['Role', 'Provider', 'Organisation', 'Hours']
+const keys = ['job_title', 'job_source', 'employer', 'weekly_hours']
+const hrefKey = 'job_url'
 
 const Projects: NextPage = () => {
     console.log('rerender')
@@ -48,12 +49,17 @@ const Projects: NextPage = () => {
                         </p>
                     </div>
                 </div>
-                <div className="hidden md:block">
+                <div className="hidden lg:block">
                     {data?.projects && (
-                        <Table items={data?.projects} headers={headers} />
+                        <Table
+                            items={data?.projects}
+                            headers={headers}
+                            keys={keys}
+                            hrefKey={hrefKey}
+                        />
                     )}
                 </div>
-                <div className="block md:hidden space-y-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:hidden space-y-2 md:space-y-0 md:gap-2">
                     {data?.projects &&
                         data.projects.map((project: Project) => (
                             <Container
@@ -79,7 +85,7 @@ const Projects: NextPage = () => {
                                     >
                                         <NavLink
                                             href={project.job_url}
-                                            target="_blank"
+                                            blank
                                             className="justify-center"
                                         >
                                             View
