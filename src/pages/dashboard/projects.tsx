@@ -6,6 +6,7 @@ import TableNew from '@/components/TableNew'
 import Typography from '@/components/Typography'
 import { projectColumns } from '@/lib/projectsTable'
 import { ExternalLinkIcon } from '@heroicons/react/outline'
+import { LocationMarkerIcon } from '@heroicons/react/solid'
 import type { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
@@ -108,6 +109,21 @@ const Projects: NextPage = () => {
                                         {/* hard-coded because data is not there yet */}
                                         IT infrastructure
                                     </Typography>
+                                    <div className="flex items-center py-2">
+                                        <LocationMarkerIcon
+                                            width={20}
+                                            height={20}
+                                            className="mr-2"
+                                        />
+                                        <Typography
+                                            variant="xs"
+                                            className="capitalize"
+                                        >
+                                            {project.location
+                                                .replace('/', ' / ')
+                                                .replace('  ', ' ')}
+                                        </Typography>
+                                    </div>
                                 </div>
                                 <div className="flex flex-col text-right">
                                     <Typography variant="lg" className="">
