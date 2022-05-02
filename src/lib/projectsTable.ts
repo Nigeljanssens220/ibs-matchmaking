@@ -8,6 +8,11 @@ export const projectColumns = [
         accessor: 'employer',
     },
     {
+        Header: 'Location',
+        accessor: 'location',
+    },
+
+    {
         Header: 'Hours',
         accessor: 'weekly_hours',
     },    
