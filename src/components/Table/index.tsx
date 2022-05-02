@@ -11,7 +11,7 @@ interface TableProps {
 
 const Table: FC<TableProps> = ({ items, headers, keys, hrefKey }) => {
     return (
-        <div className="mt-8 flex flex-col">
+        <div className="flex flex-col max-w-screen-xl">
             <div className="-my-2 -mx-4 sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                     <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
@@ -27,12 +27,6 @@ const Table: FC<TableProps> = ({ items, headers, keys, hrefKey }) => {
                                             {header}
                                         </th>
                                     ))}
-                                    <th
-                                        scope="col"
-                                        className="relative py-3.5 pl-3 pr-4 sm:pr-6 w-24"
-                                    >
-                                        <span className="sr-only">Edit</span>
-                                    </th>
                                 </tr>
                             </thead>
                             <tbody className="bg-gray-200 ">

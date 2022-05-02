@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react'
 import { classNames } from '@/utils/styling'
+import React, { ReactNode } from 'react'
 
 type ButtonVariant =
     | 'blackFilled'
@@ -23,7 +23,7 @@ export interface ButtonProps
         React.ButtonHTMLAttributes<HTMLButtonElement>,
         HTMLButtonElement
     > {
-    variant: ButtonVariant
+    variant?: ButtonVariant
     startIcon?: ReactNode
     endIcon?: ReactNode
     fullWidth?: boolean

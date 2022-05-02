@@ -2,11 +2,13 @@ import Button from '@/components/ButtonNew'
 import Container from '@/components/Container'
 import DashboardLayout from '@/components/Layout/Dashboard'
 import NavLink from '@/components/NavLink'
-import Table from '@/components/Table'
+import TableNew from '@/components/TableNew'
 import Typography from '@/components/Typography'
+import { projectColumns } from '@/lib/projectsTable'
 import { ExternalLinkIcon } from '@heroicons/react/outline'
 import type { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
+import { useEffect, useState } from 'react'
 import useSWRImmutable from 'swr/immutable'
 
 const axios = require('axios').default
@@ -23,8 +25,8 @@ const keys = [
 const hrefKey = 'job_url'
 
 const Projects: NextPage = () => {
-    console.log('rerender')
     const { data: session, status } = useSession()
+    const [projects, setProjects] = useState<Project[]>([])
 
     const fetcher = (url: string, token: string) =>
         axios
@@ -41,37 +43,52 @@ const Projects: NextPage = () => {
         fetcher
     )
 
+    useEffect(() => {
+        if (data) {
+            const modifiedData = data.projects.map((project: Project) => {
+                return {
+                    ...project,
+                    upload_date: new Date(
+                        project.upload_date * 1000
+                    ).toLocaleDateString(),
+                    submission_deadline: new Date(
+                        project.submission_deadline * 1000
+                    ).toLocaleDateString(),
+                }
+            })
+            setProjects(modifiedData)
+        }
+        return () => {
+            setProjects([])
+        }
+    }, [data])
+
     return (
         <DashboardLayout>
-            <div className="flex flex-col w-full p-3 lg:p-6 space-y-2">
-                <div className="sm:flex sm:items-center">
+            <div className="min-h-screen flex flex-col w-full p-3 lg:p-6 xl:px-8 ">
+                <div className="sm:flex sm:items-center pb-6">
                     <div className="sm:flex-auto">
                         <h1 className="text-xl font-semibold text-gray-200">
                             Projects
                         </h1>
-                        <p className="mt-2 text-sm text-gray-300">
+                        <p className="mt-2 text-sm text-gray-300 ">
                             Here&apos;s a list of all available projects you
                             have matched with. These included position, hourly
                             rate and weekly hours.
                         </p>
                     </div>
                 </div>
-                <div className="hidden lg:block">
-                    {data?.projects && (
-                        <Table
-                            items={data?.projects}
-                            headers={headers}
-                            keys={keys}
-                            hrefKey={hrefKey}
-                        />
+                <div className="hidden xl:block">
+                    {projects && (
+                        <TableNew columns={projectColumns} data={projects} />
                     )}
                 </div>
-                <div className="flex flex-col lg:hidden divide-y divide-gray-200 ">
+                <div className="flex flex-col xl:hidden divide-y divide-gray-200 ">
                     {data?.projects &&
                         data.projects.map((project: Project) => (
                             <Container
                                 key={project.id}
-                                maxWidth="full"
+                                maxWidth="2xl"
                                 className="bg-gray-800  p-2 flex items-center justify-center space-x-2 sm:space-x-6  border-t"
                             >
                                 <div className="container max-w-xs flex flex-col ">
