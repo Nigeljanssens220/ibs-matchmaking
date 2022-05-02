@@ -1,10 +1,9 @@
-import type { NextPage } from 'next'
-
-import StatCards from '@/components/StatCards'
-import Typography from '@/components/Typography'
-import Hero from '@/components/Hero'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
+import Hero from '@/components/Hero'
+import StatCards from '@/components/StatCards'
+import Typography from '@/components/Typography'
+import type { NextPage } from 'next'
 
 const Home: NextPage = () => {
     return (

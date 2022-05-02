@@ -47,16 +47,22 @@ const Table: FC<TableProps> = ({ items, headers, keys, hrefKey }) => {
                                     >
                                         {keys.map((key, idx) =>
                                             idx === 0 ? (
-                                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 ">
+                                                <td
+                                                    key={idx}
+                                                    className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 "
+                                                >
                                                     {item[key]}
                                                 </td>
                                             ) : (
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 ">
+                                                <td
+                                                    key={idx}
+                                                    className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 "
+                                                >
                                                     {item[key]}
                                                 </td>
                                             )
                                         )}
-                                        <td className="relative whitespace-nowrap py-4 px-3 text-sm font-medium border-4">
+                                        <td className="relative whitespace-nowrap py-4 px-3 text-sm font-medium ">
                                             <NavLink
                                                 href={item[hrefKey]}
                                                 blank
