@@ -1,8 +1,8 @@
+import { prisma } from '@/backend/utils/prisma'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import NextAuth from 'next-auth'
 import AzureADProvider from 'next-auth/providers/azure-ad'
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
 
-import { prisma } from '@/backend/utils/prisma'
 
 export default NextAuth({
     adapter: PrismaAdapter(prisma),
@@ -47,12 +47,14 @@ export default NextAuth({
             if (account && user) {
                 token.accessToken = account.access_token
                 token.oid = profile!.oid
+                token.expiresAt = account.expires_at && new Date(account.expires_at * 1000)
             }
             return token
         },
         async session({ session, token }) {
             // Send properties to the client, like an access_token from a provider.
             session.accessToken = token.accessToken
+            session.accessTokenExpiresAt = token.expiresAt
             session.oid = token.oid
             return session
         },
