@@ -14,25 +14,17 @@ import useSWRImmutable from 'swr/immutable'
 
 const axios = require('axios').default
 
-// Table props for the projects page
-const headers = ['Role', 'Provider', 'Organisation', 'Hours', 'Date Created']
-const keys = [
-    'job_title',
-    'job_source',
-    'employer',
-    'weekly_hours',
-    'created_at',
-]
-const hrefKey = 'job_url'
-
 const Projects: NextPage = () => {
     const { data: session, status } = useSession()
     const [projects, setProjects] = useState<Project[]>([])
 
-    const fetcher = (url: string, token: string) =>
-        axios
-            .get(url, { headers: { Authorization: `Bearer ${token}` } })
-            .then((res: { data: any }) => res.data)
+    const fetcher = async (url: string, token: string) => {
+        const res = await axios.get(url, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+
+        return res.data
+    }
 
     const { data, error, mutate } = useSWRImmutable(
         status !== 'authenticated'
@@ -44,6 +36,7 @@ const Projects: NextPage = () => {
         fetcher
     )
 
+    // Some data transformations when data is collected or updated by SWR
     useEffect(() => {
         if (data) {
             const modifiedData = data.projects.map((project: Project) => {
@@ -55,6 +48,12 @@ const Projects: NextPage = () => {
                     submission_deadline: new Date(
                         project.submission_deadline * 1000
                     ).toLocaleDateString(),
+                    job_title: project.job_title
+                        .replace('/', ' / ')
+                        .replace('  ', ' '),
+                    location: project.location
+                        .replace('/', ' / ')
+                        .replace('  ', ' '),
                 }
             })
             setProjects(modifiedData)
@@ -69,17 +68,26 @@ const Projects: NextPage = () => {
             <div className="min-h-screen flex flex-col w-full p-3 lg:p-6 xl:px-8 ">
                 <div className="sm:flex sm:items-center pb-6">
                     <div className="sm:flex-auto">
-                        <h1 className="text-xl font-semibold text-gray-200">
+                        <Typography
+                            className="md:text-3xl font-semibold text-gray-200"
+                            variant="h3"
+                            component="h3"
+                        >
                             Projects
-                        </h1>
-                        <p className="mt-2 text-sm text-gray-300 ">
+                        </Typography>
+                        <Typography
+                            className="mt-2 text-sm text-gray-300 md:text-base"
+                            variant="md"
+                            weight="medium"
+                            component="p"
+                        >
                             Here&apos;s a list of all available projects you
                             have matched with. These included position, hourly
                             rate and weekly hours.
-                        </p>
+                        </Typography>
                     </div>
                 </div>
-                <div className="hidden xl:block">
+                <div className=" relative hidden xl:block items-center  ">
                     {projects && (
                         <TableNew columns={projectColumns} data={projects} />
                     )}
@@ -90,25 +98,19 @@ const Projects: NextPage = () => {
                             <Container
                                 key={project.id}
                                 maxWidth="2xl"
-                                className="bg-gray-800  p-2 flex items-center justify-center space-x-2 sm:space-x-6  border-t"
+                                className="bg-gray-800  p-2 flex items-center justify-center sm:space-x-6  border-t"
                             >
-                                <div className="container max-w-xs flex flex-col ">
+                                <div className="container flex flex-col ">
                                     <Typography
-                                        variant="md"
+                                        variant="sm"
                                         className="capitalize "
+                                        component="span"
                                     >
                                         {project.job_title
                                             .replace('/', ' / ')
                                             .replace('  ', ' ')}
                                     </Typography>
-                                    <Typography
-                                        variant="md"
-                                        weight="thin"
-                                        className="capitalize"
-                                    >
-                                        {/* hard-coded because data is not there yet */}
-                                        IT infrastructure
-                                    </Typography>
+
                                     <div className="flex items-center py-2">
                                         <LocationMarkerIcon
                                             width={20}
@@ -118,6 +120,7 @@ const Projects: NextPage = () => {
                                         <Typography
                                             variant="xs"
                                             className="capitalize"
+                                            component="span"
                                         >
                                             {project.location
                                                 .replace('/', ' / ')
@@ -125,32 +128,31 @@ const Projects: NextPage = () => {
                                         </Typography>
                                     </div>
                                 </div>
-                                <div className="flex flex-col text-right">
-                                    <Typography variant="lg" className="">
-                                        {/* hard-coded becasue data is not there yet */}
-                                        {project.hourly_rate
-                                            ? project.hourly_rate
-                                            : '$69/h'}
-                                    </Typography>
-                                </div>
-                                <div className="flex flex-col space-y-4 w-28">
-                                    <div className="flex flex-col text-right ">
+                                <div className="flex flex-col space-y-2 w-28 ">
+                                    <div className="flex flex-col text-center ">
                                         <Typography variant="sm" className="">
                                             {/* hard-coded becasue data is not there yet */}
-                                            Engineering
-                                        </Typography>
-                                        <Typography variant="sm" weight="thin">
-                                            top skill
+                                            {project.hourly_rate
+                                                ? project.hourly_rate
+                                                : '$69/h'}
                                         </Typography>
                                     </div>
-                                    <div className="flex flex-col text-right w-28">
-                                        <Typography variant="sm" className="">
+                                    <div className="flex flex-col text-center w-28">
+                                        <Typography
+                                            variant="sm"
+                                            className=""
+                                            component="span"
+                                        >
                                             {/* hard-coded becasue data is not there yet */}
                                             {project.weekly_hours
                                                 ? project.weekly_hours
                                                 : '4-20'}
                                         </Typography>
-                                        <Typography variant="sm" weight="thin">
+                                        <Typography
+                                            variant="sm"
+                                            weight="thin"
+                                            component="span"
+                                        >
                                             hours per week
                                         </Typography>
                                     </div>

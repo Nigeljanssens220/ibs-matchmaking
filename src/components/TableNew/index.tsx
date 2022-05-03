@@ -292,6 +292,7 @@ const TableNew = ({ columns, data }) => {
                                 setPageSize(Number(e))
                                 setSelected(e)
                             }}
+                            horizontal
                         >
                             <div className="relative px-4 ">
                                 <Listbox.Button className="focus:outline-none relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
@@ -310,6 +311,7 @@ const TableNew = ({ columns, data }) => {
                                     leave="transition ease-in duration-100"
                                     leaveFrom="opacity-100"
                                     leaveTo="opacity-0"
+                                    className="absolute mb-1 w-full rounded-md bg-white shadow-lg bottom-full"
                                 >
                                     <Listbox.Options className="focus:outline-none absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 sm:text-sm z-100">
                                         {pageViewOptions.map(
@@ -319,7 +321,7 @@ const TableNew = ({ columns, data }) => {
                                                     className={({ active }) =>
                                                         `relative cursor-default select-none py-2 pl-10 pr-4 ${
                                                             active
-                                                                ? 'bg-gray-900 text-gray-100'
+                                                                ? 'bg-gray-900 text-gray-100 rounded-md'
                                                                 : 'text-gray-900'
                                                         }`
                                                     }
