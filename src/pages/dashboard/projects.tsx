@@ -93,8 +93,8 @@ const Projects: NextPage = () => {
                     )}
                 </div>
                 <div className="flex flex-col xl:hidden divide-y divide-gray-200 ">
-                    {data?.projects &&
-                        data.projects.map((project: Project) => (
+                    {projects &&
+                        projects.map((project: Project) => (
                             <Container
                                 key={project.id}
                                 maxWidth="2xl"
@@ -106,9 +106,7 @@ const Projects: NextPage = () => {
                                         className="capitalize "
                                         component="span"
                                     >
-                                        {project.job_title
-                                            .replace('/', ' / ')
-                                            .replace('  ', ' ')}
+                                        {project.job_title}
                                     </Typography>
 
                                     <div className="flex items-center py-2">
@@ -122,9 +120,7 @@ const Projects: NextPage = () => {
                                             className="capitalize"
                                             component="span"
                                         >
-                                            {project.location
-                                                .replace('/', ' / ')
-                                                .replace('  ', ' ')}
+                                            {project.location}
                                         </Typography>
                                     </div>
                                 </div>
