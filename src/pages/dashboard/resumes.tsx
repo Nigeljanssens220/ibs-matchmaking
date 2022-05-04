@@ -1,4 +1,4 @@
-import Badge from '@/components/Badge'
+import Dropbox from '@/components/Dropbox'
 import DashboardLayout from '@/components/Layout/Dashboard'
 import List from '@/components/List'
 import Typography from '@/components/Typography'
@@ -78,18 +78,10 @@ const Resumes: NextPage = () => {
                                 have matched with. These included position,
                                 hourly rate and weekly hours.
                             </Typography>
-                            <Badge variant="active">Active</Badge>
-                            <Badge variant="warning">warning</Badge>
-                            <Badge variant="error">error</Badge>
                         </div>
-                        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                            <button
-                                type="button"
-                                className="inline-flex items-center justify-center rounded-md border border-transparent bg-gray-200 px-4 py-2 text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-500 hover:text-gray-200 sm:w-auto"
-                            >
-                                Add resume
-                            </button>
-                        </div>
+                    </div>
+                    <div className="py-20 space-y-5">
+                        <Dropbox />
                     </div>
                     <List
                         data={resumes}
