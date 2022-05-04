@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Resume } from '@/types/database'
 import { classNames } from '@/utils/styling'
 import React, { useLayoutEffect, useRef, useState } from 'react'
