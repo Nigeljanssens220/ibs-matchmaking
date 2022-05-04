@@ -49,7 +49,7 @@ const Dropbox: React.FC = () => {
             <div
                 {...getRootProps({
                     className:
-                        'items-center flex bg-gray-700 w-96 h-40 border-2 hover:border-gray-300 border-dashed rounded-lg p-12 text-center hover:border-gray-600 hover:text-gray-600 cursor-pointer',
+                        'items-center flex bg-gray-700 max-w-sm h-40 border-2 hover:border-gray-300 border-dashed rounded-lg p-20 text-center hover:border-gray-600 hover:text-gray-600 cursor-pointer',
                 })}
             >
                 <input {...getInputProps()} />
