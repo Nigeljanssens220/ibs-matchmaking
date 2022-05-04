@@ -9,7 +9,7 @@ import { projectColumns } from '@/lib/projectsTable'
 import { Project } from '@/types/database'
 import { fetcher } from '@/utils/fetch'
 import { ExternalLinkIcon } from '@heroicons/react/outline'
-import { LocationMarkerIcon } from '@heroicons/react/solid'
+import { ClockIcon, LocationMarkerIcon } from '@heroicons/react/solid'
 import type { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
@@ -194,7 +194,7 @@ const Projects: NextPage = () => {
                                     </div>
                                 </div>
                                 <div className="flex flex-col space-y-2 w-28 ">
-                                    <div className="flex flex-col text-center ">
+                                    <div className="flex flex-col text-left ">
                                         <Typography variant="sm" className="">
                                             {/* hard-coded becasue data is not there yet */}
                                             {project.hourly_rate
@@ -202,7 +202,12 @@ const Projects: NextPage = () => {
                                                 : '$69/h'}
                                         </Typography>
                                     </div>
-                                    <div className="flex flex-col text-center w-28">
+                                    <div className="flex text-left w-28">
+                                        <ClockIcon
+                                            width={20}
+                                            height={20}
+                                            className="mr-2"
+                                        />
                                         <Typography
                                             variant="sm"
                                             className=""
@@ -210,15 +215,8 @@ const Projects: NextPage = () => {
                                         >
                                             {/* hard-coded becasue data is not there yet */}
                                             {project.weekly_hours
-                                                ? project.weekly_hours
-                                                : '4-20'}
-                                        </Typography>
-                                        <Typography
-                                            variant="sm"
-                                            weight="thin"
-                                            component="span"
-                                        >
-                                            hours per week
+                                                ? project.weekly_hours + 'h'
+                                                : '4-20h'}
                                         </Typography>
                                     </div>
                                 </div>

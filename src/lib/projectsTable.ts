@@ -25,11 +25,11 @@ export const projectColumns = [
         accessor: 'hourly_rate',
     },
     {
-        Header: 'Uploaded At',
+        Header: 'Uploaded',
         accessor: 'upload_date',
     },
     {
-        Header: 'Closes At',
+        Header: 'Closes',
         accessor: 'submission_deadline',
     }, 
     {

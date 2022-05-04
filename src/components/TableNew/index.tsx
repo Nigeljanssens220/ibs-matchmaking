@@ -22,6 +22,7 @@ import {
     useTable,
 } from 'react-table'
 import PageButton from '../ButtonNew/PageButton'
+import Typography from '../Typography'
 
 const pageViewOptions = [5, 10, 15]
 
@@ -220,7 +221,7 @@ const TableNew = ({ columns, data }) => {
                                                         return (
                                                             <td
                                                                 {...cell.getCellProps()}
-                                                                className="p-4 "
+                                                                className="px-4 h-16"
                                                                 role="cell"
                                                             >
                                                                 {cell.column
@@ -244,7 +245,7 @@ const TableNew = ({ columns, data }) => {
                                                     return (
                                                         <td
                                                             {...cell.getCellProps()}
-                                                            className="p-4 w-96 text-gray-900"
+                                                            className="px-4 w-96 text-gray-900 h-16"
                                                             role="cell"
                                                         >
                                                             {cell.column.Cell
@@ -276,16 +277,28 @@ const TableNew = ({ columns, data }) => {
             <div className="flex items-center justify-between">
                 <div className="flex-1 flex items-center justify-between ">
                     <div className="flex gap-x-2 items-baseline">
-                        <span className="text-sm text-gray-100">
+                        <Typography
+                            variant="sm"
+                            weight="medium"
+                            component="span"
+                        >
                             Page{' '}
-                            <span className="font-medium">
+                            <Typography
+                                variant="sm"
+                                weight="medium"
+                                component="span"
+                            >
                                 {state.pageIndex + 1}
-                            </span>{' '}
+                            </Typography>{' '}
                             of{' '}
-                            <span className="font-medium">
+                            <Typography
+                                variant="sm"
+                                weight="medium"
+                                component="span"
+                            >
                                 {pageOptions.length}
-                            </span>
-                        </span>
+                            </Typography>
+                        </Typography>
                         <Listbox
                             value={selected}
                             onChange={(e) => {
