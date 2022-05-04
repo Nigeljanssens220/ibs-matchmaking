@@ -208,7 +208,7 @@ const TableNew = ({ columns, data }) => {
                                 </thead>
                                 <tbody
                                     {...getTableBodyProps()}
-                                    className="bg-gray-100 text-left"
+                                    className="bg-gray-100 text-left text-gray-900"
                                 >
                                     {page.map((row, i) => {
                                         // new
@@ -244,7 +244,7 @@ const TableNew = ({ columns, data }) => {
                                                     return (
                                                         <td
                                                             {...cell.getCellProps()}
-                                                            className="p-4 w-96"
+                                                            className="p-4 w-96 text-gray-900"
                                                             role="cell"
                                                         >
                                                             {cell.column.Cell
