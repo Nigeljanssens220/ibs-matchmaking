@@ -4,6 +4,10 @@ export const projectColumns = [
         accessor: 'job_title',
     },
     {
+        Header: 'Match',
+        accessor: 'match',
+    },
+    {
         Header: 'Employer',
         accessor: 'employer',
     },
@@ -28,4 +32,8 @@ export const projectColumns = [
         Header: 'Closes At',
         accessor: 'submission_deadline',
     }, 
+    {
+        Header: 'Status',
+        accessor: 'status',
+    }
 ]

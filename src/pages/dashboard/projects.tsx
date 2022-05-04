@@ -1,3 +1,4 @@
+import Badge from '@/components/Badge'
 import Button from '@/components/ButtonNew'
 import Container from '@/components/Container'
 import DashboardLayout from '@/components/Layout/Dashboard'
@@ -5,6 +6,8 @@ import NavLink from '@/components/NavLink'
 import TableNew from '@/components/TableNew'
 import Typography from '@/components/Typography'
 import { projectColumns } from '@/lib/projectsTable'
+import { Project } from '@/types/database'
+import { fetcher } from '@/utils/fetch'
 import { ExternalLinkIcon } from '@heroicons/react/outline'
 import { LocationMarkerIcon } from '@heroicons/react/solid'
 import type { NextPage } from 'next'
@@ -12,19 +15,59 @@ import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import useSWRImmutable from 'swr/immutable'
 
-const axios = require('axios').default
+const today = new Date()
+
+const diffDays = (d1: Date, d2: Date) => {
+    const diff = Math.abs(d1.getTime() - d2.getTime())
+    return Math.ceil(diff / (1000 * 3600 * 24))
+}
+
+const ProjectStatus = (date: Date) => {
+    const days = diffDays(today, date)
+
+    if (days < 7) {
+        return (
+            <Badge variant="warning" fullWidth className="">
+                Closing
+            </Badge>
+        )
+    }
+
+    return (
+        <Badge variant="active" fullWidth>
+            Available
+        </Badge>
+    )
+}
+
+const ProjectMatch = (matched: number, not_matched: string[]) => {
+    const overlap = (matched / not_matched.length) * 100
+    if (overlap < 10) {
+        return (
+            <Badge variant="error" fullWidth className="">
+                Poor
+            </Badge>
+        )
+    }
+
+    if (overlap < 20) {
+        return (
+            <Badge variant="warning" fullWidth className="">
+                Average
+            </Badge>
+        )
+    }
+
+    return (
+        <Badge variant="active" fullWidth className="">
+            Excellent
+        </Badge>
+    )
+}
 
 const Projects: NextPage = () => {
     const { data: session, status } = useSession()
     const [projects, setProjects] = useState<Project[]>([])
-
-    const fetcher = async (url: string, token: string) => {
-        const res = await axios.get(url, {
-            headers: { Authorization: `Bearer ${token}` },
-        })
-
-        return res.data
-    }
 
     const { data, error, mutate } = useSWRImmutable(
         status !== 'authenticated'
@@ -39,23 +82,49 @@ const Projects: NextPage = () => {
     // Some data transformations when data is collected or updated by SWR
     useEffect(() => {
         if (data) {
-            const modifiedData = data.projects.map((project: Project) => {
+            let transformedDates = data.projects.map((project: Project) => {
                 return {
                     ...project,
-                    upload_date: new Date(
-                        project.upload_date * 1000
-                    ).toLocaleDateString(),
+                    status: ProjectStatus(
+                        new Date(project.submission_deadline * 1000)
+                    ),
+                    match: project.match_length
+                        ? ProjectMatch(project.match_length, project.kw_unique)
+                        : null,
+                    upload_date: new Date(project.upload_date * 1000),
                     submission_deadline: new Date(
                         project.submission_deadline * 1000
-                    ).toLocaleDateString(),
-                    job_title: project.job_title
-                        .replace('/', ' / ')
-                        .replace('  ', ' '),
-                    location: project.location
-                        .replace('/', ' / ')
-                        .replace('  ', ' '),
+                    ),
                 }
             })
+
+            transformedDates.sort((a: Project, b: Project) => {
+                return a.submission_deadline - b.submission_deadline
+            })
+
+            const modifiedData = transformedDates.map(
+                (project: {
+                    upload_date: { toLocaleDateString: () => any }
+                    submission_deadline: { toLocaleDateString: () => any }
+                    job_title: string
+                    location: string
+                }) => {
+                    return {
+                        ...project,
+                        //@ts-ignore TYPE NEEDS FIXING
+                        upload_date: project.upload_date.toLocaleDateString(),
+                        // //@ts-ignore
+                        submission_deadline:
+                            project.submission_deadline.toLocaleDateString(),
+                        job_title: project.job_title
+                            .replace('/', ' / ')
+                            .replace('  ', ' '),
+                        location: project.location
+                            .replace('/', ' / ')
+                            .replace('  ', ' '),
+                    }
+                }
+            )
             setProjects(modifiedData)
         }
         return () => {
