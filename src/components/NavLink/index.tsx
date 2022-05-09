@@ -9,10 +9,17 @@ interface NavLinkProps extends React.HTMLProps<HTMLAnchorElement> {
     blank?: boolean
 }
 
-const NavLink: FC<NavLinkProps> = ({ href, children, className, blank }) => {
+const NavLink: FC<NavLinkProps> = ({
+    href,
+    children,
+    className,
+    blank,
+    ...rest
+}) => {
     return (
         <Link href={href} passHref>
             <a
+                {...rest}
                 target={blank ? '_blank' : '_self'}
                 className={classNames(
                     className,

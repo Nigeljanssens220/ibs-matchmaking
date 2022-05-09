@@ -4,33 +4,42 @@ import { Fragment, useState } from 'react'
 import Typography from '../Typography'
 
 interface ModalProps {
+    label: string | JSX.Element
+    buttonLabel: string
     title: string
-    content?: any
+    children: React.ReactNode
+    onClick?: (event: React.MouseEvent<HTMLDivElement>) => void
+    variant: 'success' | 'error'
 }
 
-const Modal: React.FC<ModalProps> = ({ title, content, children }) => {
+const VARIANT = {
+    success:
+        'inline-flex justify-center rounded-md border border-transparent bg-gray-900 px-4 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-300',
+    error: 'inline-flex justify-center rounded-md border border-transparent bg-red-700 px-4 py-2 text-sm font-medium text-red-100 hover:bg-red-800 hover:text-red-200',
+}
+const Modal: React.FC<ModalProps> = ({
+    label,
+    buttonLabel,
+    title,
+    children,
+    variant = 'success',
+    onClick = () => {},
+}) => {
     const [isOpen, setIsOpen] = useState(false)
 
-    function closeModal() {
+    const closeModal = () => {
         setIsOpen(false)
     }
 
-    function openModal() {
+    const openModal = () => {
         setIsOpen(true)
     }
 
     return (
-        <div>
-            <div className="fixed inset-0 flex items-center justify-center">
-                <button
-                    type="button"
-                    onClick={openModal}
-                    className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                >
-                    test
-                </button>
+        <>
+            <div className="flex items-center justify-center">
+                <Typography onClick={openModal}>{label}</Typography>
             </div>
-
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-10" onClose={closeModal}>
                     <Transition.Child
@@ -56,37 +65,45 @@ const Modal: React.FC<ModalProps> = ({ title, content, children }) => {
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <div className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                                    <div className="flex items-center justify-between">
-                                        <Dialog.Title
-                                            as="h3"
-                                            className="text-lg font-medium leading-6 text-gray-900"
-                                        >
-                                            title
-                                        </Dialog.Title>
-                                        <div className="">
-                                            <button
-                                                type="button"
-                                                className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                                onClick={closeModal}
-                                            >
-                                                Take me back, thanks!
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <Typography
-                                        variant="base"
-                                        className="mt-4 "
+                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-lg font-medium leading-6 text-gray-900"
                                     >
-                                        fake content, yo!
-                                    </Typography>
-                                </div>
+                                        {title}
+                                    </Dialog.Title>
+                                    <div className="mt-2">
+                                        <Typography className="text-sm text-gray-500">
+                                            {children}
+                                        </Typography>
+                                    </div>
+
+                                    <div className="mt-4 flex gap-2">
+                                        <button
+                                            type="button"
+                                            className={VARIANT[variant]}
+                                            onClick={() => {
+                                                onClick()
+                                                closeModal()
+                                            }}
+                                        >
+                                            {buttonLabel}
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-300 hover:text-gray-700 "
+                                            onClick={closeModal}
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </Dialog.Panel>
                             </Transition.Child>
                         </div>
                     </div>
                 </Dialog>
             </Transition>
-        </div>
+        </>
     )
 }
 
