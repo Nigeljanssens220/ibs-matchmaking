@@ -19,7 +19,7 @@ export const projectColumns = [
     {
         Header: 'Hours',
         accessor: 'weekly_hours',
-    },    
+    },
     {
         Header: 'Rate',
         accessor: 'hourly_rate',
@@ -31,9 +31,13 @@ export const projectColumns = [
     {
         Header: 'Closes',
         accessor: 'submission_deadline',
-    }, 
+    },
     {
         Header: 'Status',
         accessor: 'status',
-    }
+    },
+    {
+        Header: '',
+        accessor: 'job_url',
+    },
 ]

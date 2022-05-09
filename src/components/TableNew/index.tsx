@@ -7,6 +7,7 @@ import {
     ChevronDoubleRightIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
+    ExternalLinkIcon,
     SelectorIcon,
     SortAscendingIcon,
     SortDescendingIcon,
@@ -22,6 +23,7 @@ import {
     useTable,
 } from 'react-table'
 import PageButton from '../ButtonNew/PageButton'
+import NavLink from '../NavLink'
 import Typography from '../Typography'
 
 const pageViewOptions = [5, 10, 15]
@@ -216,19 +218,103 @@ const TableNew = ({ columns, data }) => {
                                         prepareRow(row)
                                         return (
                                             <tr {...row.getRowProps()}>
-                                                {row.cells.map((cell, idx) => {
-                                                    if (idx !== 0) {
+                                                {row.cells.map(
+                                                    (cell, idx, arr) => {
+                                                        if (
+                                                            arr.length - 1 ===
+                                                            idx
+                                                        ) {
+                                                            return (
+                                                                <td
+                                                                    {...cell.getCellProps()}
+                                                                    className="px-4 h-16"
+                                                                    role="cell"
+                                                                >
+                                                                    {cell.column
+                                                                        .Cell
+                                                                        .name ===
+                                                                    'defaultRenderer' ? (
+                                                                        <div className=" text-gray-900">
+                                                                            <NavLink
+                                                                                href={
+                                                                                    cell.value
+                                                                                }
+                                                                                blank
+                                                                            >
+                                                                                <ExternalLinkIcon className="w-6 h-6" />
+                                                                            </NavLink>
+                                                                        </div>
+                                                                    ) : (
+                                                                        cell.render(
+                                                                            'Cell'
+                                                                        )
+                                                                    )}
+                                                                </td>
+                                                            )
+                                                        }
+
+                                                        if (idx !== 0) {
+                                                            return (
+                                                                <td
+                                                                    {...cell.getCellProps()}
+                                                                    className="px-4 h-16"
+                                                                    role="cell"
+                                                                >
+                                                                    {cell.column
+                                                                        .Cell
+                                                                        .name ===
+                                                                    'defaultRenderer' ? (
+                                                                        <div className="text-sm text-gray-900">
+                                                                            {cell.render(
+                                                                                'Cell'
+                                                                            )}
+                                                                        </div>
+                                                                    ) : (
+                                                                        cell.render(
+                                                                            'Cell'
+                                                                        )
+                                                                    )}
+                                                                </td>
+                                                            )
+                                                        }
+
+                                                        if (
+                                                            arr.length - 1 ===
+                                                            idx
+                                                        ) {
+                                                            return (
+                                                                <td
+                                                                    {...cell.getCellProps()}
+                                                                    className="px-4 h-16"
+                                                                    role="cell"
+                                                                >
+                                                                    {cell.column
+                                                                        .Cell
+                                                                        .name ===
+                                                                    'defaultRenderer' ? (
+                                                                        <div className="text-sm text-gray-900">
+                                                                            blalbalblabla
+                                                                        </div>
+                                                                    ) : (
+                                                                        cell.render(
+                                                                            'Cell'
+                                                                        )
+                                                                    )}
+                                                                </td>
+                                                            )
+                                                        }
+
                                                         return (
                                                             <td
                                                                 {...cell.getCellProps()}
-                                                                className="px-4 h-16"
+                                                                className="px-4 w-96 text-gray-900 h-16"
                                                                 role="cell"
                                                             >
                                                                 {cell.column
                                                                     .Cell
                                                                     .name ===
                                                                 'defaultRenderer' ? (
-                                                                    <div className="text-sm text-gray-900">
+                                                                    <div className="text-sm text-gray-900 ">
                                                                         {cell.render(
                                                                             'Cell'
                                                                         )}
@@ -241,29 +327,7 @@ const TableNew = ({ columns, data }) => {
                                                             </td>
                                                         )
                                                     }
-
-                                                    return (
-                                                        <td
-                                                            {...cell.getCellProps()}
-                                                            className="px-4 w-96 text-gray-900 h-16"
-                                                            role="cell"
-                                                        >
-                                                            {cell.column.Cell
-                                                                .name ===
-                                                            'defaultRenderer' ? (
-                                                                <div className="text-sm text-gray-900 ">
-                                                                    {cell.render(
-                                                                        'Cell'
-                                                                    )}
-                                                                </div>
-                                                            ) : (
-                                                                cell.render(
-                                                                    'Cell'
-                                                                )
-                                                            )}
-                                                        </td>
-                                                    )
-                                                })}
+                                                )}
                                             </tr>
                                         )
                                     })}
