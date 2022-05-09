@@ -161,13 +161,13 @@ const Projects: NextPage = () => {
                         <TableNew columns={projectColumns} data={projects} />
                     )}
                 </div>
-                <div className="flex flex-col xl:hidden divide-y divide-gray-200 ">
+                <div className="flex flex-col xl:hidden divide-y  divide-gray-200 ">
                     {projects &&
                         projects.map((project: Project) => (
                             <Container
                                 key={project.id}
                                 maxWidth="2xl"
-                                className="bg-gray-800  p-2 flex items-center justify-center sm:space-x-6  border-t"
+                                className="bg-gray-800 h-32 p-2 flex items-center justify-center space-x-2 sm:space-x-6  border-t"
                             >
                                 <div className="container flex flex-col ">
                                     <Typography
@@ -193,7 +193,7 @@ const Projects: NextPage = () => {
                                         </Typography>
                                     </div>
                                 </div>
-                                <div className="flex flex-col space-y-2 w-28 ">
+                                <div className="flex flex-col space-y-2 w-16 mr-2">
                                     <div className="flex flex-col text-left ">
                                         <Typography variant="sm" className="">
                                             {/* hard-coded becasue data is not there yet */}
