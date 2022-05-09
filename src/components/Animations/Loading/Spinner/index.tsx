@@ -7,12 +7,12 @@ export interface SpinnerProps extends React.HTMLProps<HTMLDivElement> {
 
 const Spinner: FC<SpinnerProps> = ({ className }) => {
     return (
-        <div className="w-40">
+        <>
             <svg
                 role="status"
                 className={classNames(
                     className,
-                    'w-40 h-40 text-zinc-300 animate-spin fill-zinc-700 '
+                    ' text-zinc-300 animate-spin fill-zinc-700 '
                 )}
                 viewBox="0 0 100 101"
                 fill="none"
@@ -27,7 +27,7 @@ const Spinner: FC<SpinnerProps> = ({ className }) => {
                     fill="currentFill"
                 />
             </svg>
-        </div>
+        </>
     )
 }
 
