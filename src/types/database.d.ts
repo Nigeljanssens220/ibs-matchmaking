@@ -29,20 +29,22 @@ export interface Project {
 }
 
 export interface ReadItemsProps {
-    items: Resume[];
+    items: Resume[]
 }
 
 export interface Resume {
-    id:              string;
-    consultant_id:   string;
-    consultant_name: string;
-    description:     string;
-    matchmaking:     boolean;
-    keywords:        string;
-    keywords_count:  string;
-    _rid:            string;
-    _self:           string;
-    _etag:           string;
-    _attachments:    string;
-    _ts:             number;
+    fileName?: string
+    dateUploaded?: string
+    id: string
+    consultant_id: string
+    consultant_name: string
+    description: string
+    matchmaking: boolean
+    keywords: string
+    keywords_count: string
+    _rid: string
+    _self: string
+    _etag: string
+    _attachments: string
+    _ts: number
 }
