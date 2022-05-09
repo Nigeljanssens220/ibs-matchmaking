@@ -1,23 +1,40 @@
 import { useUploadForm } from '@/utils/hooks'
-import { CircularProgress } from '@mui/material'
-import React, { useCallback, useState } from 'react'
+import { FolderAddIcon } from '@heroicons/react/outline'
+import { TextField } from '@mui/material'
+import { useSession } from 'next-auth/react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
+import { useSWRConfig } from 'swr'
+import Spinner from '../Animations/Loading/Spinner'
+
 interface FileUploadProps {
     matchmaking: boolean
     file: File | null
     description: string
 }
 
-const Dropbox: React.FC = () => {
+const Dropbox: React.FC = ({}) => {
+    const { data: session, status } = useSession()
     const [formValues, setFormValues] = useState<FileUploadProps>({
         matchmaking: true,
-        description: 'test',
+        description: '',
         file: null,
     })
+    const [submitting, setSubmitting] = useState(true)
+    const [uploadProgress, setUploadProgress] = useState(0)
+    const [description, setDescription] = useState('')
+    const { mutate } = useSWRConfig()
 
     const { isSuccess, uploadForm, progress } = useUploadForm(
         'https://ibs-matchmaking-api.azurewebsites.net/createItem'
     )
+
+    const hasSubmitted = (formValues: { file: any }, submitting: boolean) => {
+        if (formValues.file && submitting) {
+            return false
+        }
+        return true
+    }
 
     const onDrop = useCallback((acceptedFile) => {
         setFormValues((prevFormValues) => ({
@@ -37,47 +54,82 @@ const Dropbox: React.FC = () => {
 
     const handleSubmit = async () => {
         let formData = new FormData()
-        formData.append('description', formValues.description)
+        formData.append('description', description)
         formData.append('matchmaking', formValues.matchmaking.toString())
         formValues.file && formData.append('file', formValues.file)
 
-        return await uploadForm(formData)
+        await uploadForm(formData)
+
+        setFormValues({ file: null, matchmaking: true, description: '' })
+        setSubmitting(true)
+        setUploadProgress(0)
+
+        // update existing data in cache with newly uploaded resume
+        mutate(
+            status !== 'authenticated'
+                ? null
+                : [
+                      'https://ibs-matchmaking-api.azurewebsites.net/readItems',
+                      session!.accessToken,
+                  ]
+        )
     }
+
+    useEffect(() => {
+        if (progress) setUploadProgress(progress)
+        return () => setUploadProgress(0)
+    }, [progress])
 
     return (
         <>
             <div
                 {...getRootProps({
                     className:
-                        'items-center flex bg-gray-700 max-w-sm h-40 border-2 hover:border-gray-300 border-dashed rounded-lg p-20 text-center hover:border-gray-600 hover:text-gray-600 cursor-pointer',
+                        'items-center flex flex-col bg-gray-700 max-w-md py-10 gap-5 border-2 hover:border-gray-300 border-dashed rounded-lg p-20 text-center hover:border-gray-600 hover:text-gray-600 cursor-pointer',
                 })}
             >
                 <input {...getInputProps()} />
+                <FolderAddIcon className="w-12 h-12" />
                 {isDragActive ? (
                     <p>Drop your file here.</p>
                 ) : (
-                    <p>Drag your file here, or click to select a file.</p>
+                    <p className="xs:block">
+                        Drag your file here, or click to select a file.
+                    </p>
                 )}
             </div>
             <div className="flex gap-2">
                 <strong>Files:</strong>
                 <div>{formValues.file && formValues.file.name}</div>
             </div>
-            {progress ? (
-                <CircularProgress
-                    size={24}
-                    variant="determinate"
-                    value={progress}
-                />
-            ) : (
-                <button
-                    type="submit"
-                    onClick={handleSubmit}
-                    className=" rounded-md px-4 py-2 text-gray-100 bg-gray-700 hover:bg-gray-500"
-                >
-                    Submit
-                </button>
-            )}
+            <TextField
+                placeholder="e.g. my favorite resume"
+                label="Description"
+                variant="filled"
+                className="bg-gray-700 max-w-md w-full rounded-lg"
+                value={description}
+                onChange={(e) => {
+                    setDescription(e.target.value)
+                    // setFormValues((prevFormValues) => ({
+                    //     ...prevFormValues,
+                    //     description: e.target.value,
+                    // }))
+                }}
+                InputLabelProps={{
+                    shrink: true,
+                    style: { color: 'white' },
+                }}
+                InputProps={{
+                    disableUnderline: true,
+                    style: { color: 'white' },
+                }}
+            />
+            <button
+                onClick={handleSubmit}
+                className="flex items-center justify-center w-full max-w-md rounded-md px-4 h-16 text-gray-100 bg-gray-700 hover:bg-gray-500"
+            >
+                {uploadProgress ? <Spinner className="w-8 h-8" /> : 'Submit'}
+            </button>
         </>
     )
 }
