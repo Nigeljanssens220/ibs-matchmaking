@@ -2,10 +2,17 @@ export const headers = [
     {
         label: 'Get started',
         href: '/introduction',
+        protectedItem: false,
     },
     {
         label: 'Dashboard',
         href: '/dashboard',
+        protectedItem: true,
+    },
+    {
+        label: 'Profile',
+        href: '/profile',
+        protectedItem: true,
     },
 
     // {
