@@ -1,3 +1,4 @@
+//@ts-nocheck
 import Form from '@/components/Form'
 import FormSection from '@/components/Form/FormSection'
 import FormSectionHeader from '@/components/Form/FormSection/FormSectionHeader'
@@ -44,6 +45,7 @@ const Profile: NextPage = () => {
                 <Switch checked={enabled} onChange={() => setEnabled} />
                 <RadioGroup items={options} />
             </div>
+
             <Form {...formProps} onSubmit={formProps.handleSubmit(onSubmit)}>
                 <FormSection
                     header={<FormSectionHeader header="Personalia" />}
