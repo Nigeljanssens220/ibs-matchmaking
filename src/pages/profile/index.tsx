@@ -38,7 +38,6 @@ const Profile: NextPage = () => {
     })
 
     const onSubmit = (data: typeof UserSettings) => console.log(data)
-    const header = 'testheader'
     return (
         <>
             <div>
