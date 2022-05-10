@@ -4,12 +4,13 @@ import { Fragment, useState } from 'react'
 import Typography from '../Typography'
 
 interface ModalProps {
-    label: string | JSX.Element
-    buttonLabel: string
+    label?: string | JSX.Element
+    buttonLabel?: string
     title: string
     children: React.ReactNode
     onClick?: (event: React.MouseEvent<HTMLDivElement>) => void
     variant: 'success' | 'error'
+    initialState?: boolean
 }
 
 const VARIANT = {
@@ -23,9 +24,10 @@ const Modal: React.FC<ModalProps> = ({
     title,
     children,
     variant = 'success',
+    initialState = false,
     onClick = () => {},
 }) => {
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(initialState)
 
     const closeModal = () => {
         setIsOpen(false)
@@ -79,23 +81,40 @@ const Modal: React.FC<ModalProps> = ({
                                     </div>
 
                                     <div className="mt-4 flex gap-2">
-                                        <button
-                                            type="button"
-                                            className={VARIANT[variant]}
-                                            onClick={() => {
-                                                onClick()
-                                                closeModal()
-                                            }}
-                                        >
-                                            {buttonLabel}
-                                        </button>
-                                        <button
-                                            type="button"
-                                            className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-300 hover:text-gray-700 "
-                                            onClick={closeModal}
-                                        >
-                                            Cancel
-                                        </button>
+                                        {variant === 'success' ? (
+                                            <>
+                                                <button
+                                                    type="button"
+                                                    className={VARIANT[variant]}
+                                                    onClick={() => {
+                                                        onClick && onClick()
+                                                        closeModal()
+                                                    }}
+                                                >
+                                                    {buttonLabel}
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <button
+                                                    type="button"
+                                                    className={VARIANT[variant]}
+                                                    onClick={() => {
+                                                        onClick()
+                                                        closeModal()
+                                                    }}
+                                                >
+                                                    {buttonLabel}
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-300 hover:text-gray-700 "
+                                                    onClick={closeModal}
+                                                >
+                                                    Cancel
+                                                </button>
+                                            </>
+                                        )}
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>

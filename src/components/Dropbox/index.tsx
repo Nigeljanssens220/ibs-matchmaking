@@ -6,6 +6,8 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useSWRConfig } from 'swr'
 import Spinner from '../Animations/Loading/Spinner'
+import Modal from '../Modal'
+import Typography from '../Typography'
 
 interface FileUploadProps {
     matchmaking: boolean
@@ -61,7 +63,7 @@ const Dropbox: React.FC = ({}) => {
         await uploadForm(formData)
 
         setFormValues({ file: null, matchmaking: true, description: '' })
-        setSubmitting(true)
+        setSubmitting(false)
         setUploadProgress(0)
 
         // update existing data in cache with newly uploaded resume
@@ -73,12 +75,17 @@ const Dropbox: React.FC = ({}) => {
                       session!.accessToken,
                   ]
         )
+        // setSubmitting(true)
+        console.log(isSuccess)
+        console.log(submitting)
     }
 
     useEffect(() => {
         if (progress) setUploadProgress(progress)
         return () => setUploadProgress(0)
     }, [progress])
+
+    useEffect(() => {}, [submitting])
 
     return (
         <>
@@ -109,7 +116,10 @@ const Dropbox: React.FC = ({}) => {
                 className="bg-gray-700 max-w-md w-full rounded-lg"
                 value={description}
                 onKeyDown={(e) => {
-                    if (e.key === 'Enter') handleSubmit()
+                    if (e.key === 'Enter') {
+                        handleSubmit()
+                        setSubmitting(!submitting)
+                    }
                 }}
                 onChange={(e) => {
                     setDescription(e.target.value)
@@ -128,11 +138,29 @@ const Dropbox: React.FC = ({}) => {
                 }}
             />
             <button
-                onClick={handleSubmit}
+                onClick={() => {
+                    handleSubmit
+                    setSubmitting(!submitting)
+                }}
                 className="flex items-center justify-center w-full max-w-md rounded-md px-4 h-16 text-gray-100 bg-gray-700 hover:bg-gray-500"
             >
                 {uploadProgress ? <Spinner className="w-8 h-8" /> : 'Submit'}
             </button>
+            {!isSuccess && !submitting && (
+                <Modal
+                    title="An unexpected error occurred"
+                    buttonLabel="Try again"
+                    variant="success"
+                    initialState={true}
+                >
+                    <Typography>
+                        We were unable to upload your data to our database.
+                        Please check if you have uploaded your resume
+                        previously, or contact an administrator if the problem
+                        persists.
+                    </Typography>
+                </Modal>
+            )}
         </>
     )
 }
