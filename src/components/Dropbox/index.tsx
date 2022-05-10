@@ -108,6 +108,9 @@ const Dropbox: React.FC = ({}) => {
                 variant="filled"
                 className="bg-gray-700 max-w-md w-full rounded-lg"
                 value={description}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') handleSubmit()
+                }}
                 onChange={(e) => {
                     setDescription(e.target.value)
                     // setFormValues((prevFormValues) => ({
