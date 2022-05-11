@@ -8,8 +8,11 @@ import Typography from '@/components/Typography'
 import { projectColumns } from '@/lib/projectsTable'
 import { Project } from '@/types/database'
 import { fetcher } from '@/utils/fetch'
-import { ExternalLinkIcon } from '@heroicons/react/outline'
-import { ClockIcon, LocationMarkerIcon } from '@heroicons/react/solid'
+import {
+    ClockIcon,
+    ExternalLinkIcon,
+    LocationMarkerIcon,
+} from '@heroicons/react/solid'
 import type { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
