@@ -7,7 +7,6 @@ import {
     ChevronDoubleRightIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
-    ExternalLinkIcon,
     SelectorIcon,
     SortAscendingIcon,
     SortDescendingIcon,
@@ -234,14 +233,14 @@ const TableNew = ({ columns, data }) => {
                                                                         .Cell
                                                                         .name ===
                                                                     'defaultRenderer' ? (
-                                                                        <div className=" text-gray-500">
+                                                                        <div className=" text-gray-500 text-sm pr-2">
                                                                             <NavLink
                                                                                 href={
                                                                                     cell.value
                                                                                 }
                                                                                 blank
                                                                             >
-                                                                                <ExternalLinkIcon className="w-6 h-6" />
+                                                                                view
                                                                             </NavLink>
                                                                         </div>
                                                                     ) : (
@@ -268,32 +267,6 @@ const TableNew = ({ columns, data }) => {
                                                                             {cell.render(
                                                                                 'Cell'
                                                                             )}
-                                                                        </div>
-                                                                    ) : (
-                                                                        cell.render(
-                                                                            'Cell'
-                                                                        )
-                                                                    )}
-                                                                </td>
-                                                            )
-                                                        }
-
-                                                        if (
-                                                            arr.length - 1 ===
-                                                            idx
-                                                        ) {
-                                                            return (
-                                                                <td
-                                                                    {...cell.getCellProps()}
-                                                                    className="px-4 h-16"
-                                                                    role="cell"
-                                                                >
-                                                                    {cell.column
-                                                                        .Cell
-                                                                        .name ===
-                                                                    'defaultRenderer' ? (
-                                                                        <div className="text-sm text-gray-900">
-                                                                            blalbalblabla
                                                                         </div>
                                                                     ) : (
                                                                         cell.render(
