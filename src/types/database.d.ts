@@ -1,8 +1,8 @@
-interface ReadProjectsProps {
+export interface ReadProjectsProps {
     projects: Project[]
 }
 
-interface Project {
+export interface Project {
     id: string
     source: 'jobcatcher' | 'fixedtoday'
     upload_date: number
@@ -26,4 +26,25 @@ interface Project {
     not_matched?: string[]
     match_length?: number
     not_matched_length?: number
+}
+
+export interface ReadItemsProps {
+    items: Resume[]
+}
+
+export interface Resume {
+    fileName?: string
+    dateUploaded?: string
+    id: string
+    consultant_id: string
+    consultant_name: string
+    description: string
+    matchmaking: boolean
+    keywords: string
+    keywords_count: string
+    _rid: string
+    _self: string
+    _etag: string
+    _attachments: string
+    _ts: number
 }

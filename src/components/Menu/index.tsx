@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { FC, ReactNode, useState } from 'react'
-import { signIn, signOut, useSession } from 'next-auth/react'
 import Button from '@/components/ButtonNew'
+import { classNames } from '@/utils/styling'
 import { MenuIcon, XIcon } from '@heroicons/react/solid'
+import { signIn, signOut, useSession } from 'next-auth/react'
+import React, { FC, ReactNode, useState } from 'react'
 import NavLink from '../NavLink'
 import Typography from '../Typography'
 
@@ -14,16 +15,30 @@ interface MenuItemProps
     href: string
     children?: ReactNode
     label?: string
+    className?: string
+    protectedItem: boolean
 }
 
-const MenuItem: FC<MenuItemProps> = ({ children, href, ...rest }) => {
+const MenuItem: FC<Omit<MenuItemProps, 'protectedItem'>> = ({
+    children,
+    href,
+    className,
+    ...rest
+}) => {
+    const { data: session } = useSession()
+
     return (
-        <li
-            {...rest}
-            className="text-zinc-900 md:text-gray-200 hover:text-gray-500 cursor-pointer "
-        >
-            <NavLink href={href}>{children}</NavLink>
-        </li>
+        <>
+            <li
+                {...rest}
+                className={classNames(
+                    className,
+                    'text-zinc-900 md:text-gray-200 hover:text-gray-500 cursor-pointer '
+                )}
+            >
+                <NavLink href={href}>{children}</NavLink>
+            </li>
+        </>
     )
 }
 
@@ -68,11 +83,19 @@ const Menu: FC<MenuProps> = ({ items, className }) => {
                         <XIcon className="text-black " width={32} height={32} />
                     </button>
                     <ul className="flex flex-col md:flex md:flex-row items-center justify-center fixed md:relative top-0 bottom-0 left-0 right-0 bg-white md:bg-transparent z-20 space-y-10 md:space-y-0 md:space-x-10">
-                        {items.map(({ label, href }) => (
-                            <MenuItem key={label} href={href}>
-                                {label}
-                            </MenuItem>
-                        ))}
+                        {items.map(({ label, href, protectedItem }) =>
+                            protectedItem && session ? (
+                                <MenuItem key={label} href={href}>
+                                    {label}
+                                </MenuItem>
+                            ) : protectedItem && !session ? (
+                                <></>
+                            ) : (
+                                <MenuItem key={label} href={href}>
+                                    {label}
+                                </MenuItem>
+                            )
+                        )}
                         <li className=" text-zinc-900 text-lg hover:text-gray-700 cursor-pointer ">
                             {session ? (
                                 <>

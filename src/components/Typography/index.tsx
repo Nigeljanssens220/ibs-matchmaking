@@ -1,12 +1,13 @@
 /* eslint-disable react/display-name */
-import React, { FC, forwardRef } from 'react'
 import { classNames } from '@/utils/styling'
+import React, { FC, forwardRef } from 'react'
 
-export type TypographyWeight = 'thin' | 'medium' | 'bold'
+export type TypographyWeight = 'thin' | 'medium' | 'bold' | 'normal'
 
 enum Weights {
     thin = 'font-thin',
     medium = 'font-medium',
+    normal = 'font-normal',
     bold = 'font-bold',
 }
 
@@ -45,7 +46,7 @@ const Typography: FC<TypographyProps> = forwardRef(
     (
         {
             variant = 'base',
-            weight = 'medium',
+            weight = 'normal',
             component = 'div',
             className = 'currentColor',
             children = [],

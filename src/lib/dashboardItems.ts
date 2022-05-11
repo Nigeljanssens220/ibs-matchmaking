@@ -2,28 +2,28 @@ import {
     AcademicCapIcon,
     BriefcaseIcon,
     HomeIcon,
-    UserIcon,
+    UserIcon
 } from '@heroicons/react/solid'
 
-export const SidebarItems = [
+export const dashboardItems = [
     {
         label: 'Home',
         href: '/dashboard',
-        startIcon: <HomeIcon width={32} height={32} className="mx-5" />,
+        icon: HomeIcon
     },
     {
         label: 'Projects',
         href: '/dashboard/projects',
-        startIcon: <BriefcaseIcon width={32} height={32} className="mx-5" />,
+        icon: BriefcaseIcon
     },
     {
         label: 'Resumes',
         href: '/dashboard/resumes',
-        startIcon: <AcademicCapIcon width={32} height={32} className="mx-5" />,
+        icon: AcademicCapIcon
     },
     {
         label: 'Profile',
         href: '/profile',
-        startIcon: <UserIcon width={32} height={32} className="mx-5" />,
+        icon: UserIcon
     },
 ]

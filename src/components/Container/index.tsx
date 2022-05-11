@@ -1,5 +1,4 @@
 import { classNames } from '@/utils/styling'
-import { FC, ReactNode } from 'react'
 
 type MaxWidth =
     | 'full'
@@ -31,13 +30,13 @@ const WIDTH: Record<MaxWidth, string> = {
 }
 
 interface ContainerProps {
-    children: ReactNode
+    children: React.ReactNode
     maxWidth?: MaxWidth
     className?: string
     id?: string
 }
 
-const Container: FC<ContainerProps> = ({
+const Container: React.FC<ContainerProps> = ({
     children,
     maxWidth = '2xl',
     className = '',

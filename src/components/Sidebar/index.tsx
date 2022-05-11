@@ -1,14 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
-import { Fragment, useState } from 'react'
+import { dashboardItems } from '@/lib/dashboardItems'
 import { Dialog, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
-import SidebarItem from './SidebarItem'
-import { SidebarItems } from '@/lib/DashboardSidebar'
-import Typography from '../Typography'
 import { LogoutIcon } from '@heroicons/react/solid'
 import { signOut, useSession } from 'next-auth/react'
-import NavLink from '../NavLink'
 import { useRouter } from 'next/router'
+import { Fragment, useState } from 'react'
+import NavLink from '../NavLink'
+import Typography from '../Typography'
+import SidebarItem from './SidebarItem'
 
 const Sidebar: React.FC = ({ children }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -90,18 +90,22 @@ const Sidebar: React.FC = ({ children }) => {
                                         </Typography>
                                     </NavLink>
                                 </div>
-                                {SidebarItems.map(
-                                    ({ label, href, startIcon }) => (
-                                        <div className="flex" key={label}>
-                                            <SidebarItem
-                                                href={href}
-                                                startIcon={startIcon}
-                                            >
-                                                {label}
-                                            </SidebarItem>
-                                        </div>
-                                    )
-                                )}
+                                {dashboardItems.map((item) => (
+                                    <div className="flex" key={item.label}>
+                                        <SidebarItem
+                                            href={item.href}
+                                            startIcon={
+                                                <item.icon
+                                                    width={32}
+                                                    height={32}
+                                                    className="mx-5"
+                                                />
+                                            }
+                                        >
+                                            {item.label}
+                                        </SidebarItem>
+                                    </div>
+                                ))}
                                 <div>
                                     <button
                                         onClick={handleLogout}
@@ -183,10 +187,19 @@ const Sidebar: React.FC = ({ children }) => {
                                 </Typography>
                             </NavLink>
                         </div>
-                        {SidebarItems.map(({ label, href, startIcon }) => (
-                            <div className="flex" key={label}>
-                                <SidebarItem href={href} startIcon={startIcon}>
-                                    {label}
+                        {dashboardItems.map((item) => (
+                            <div className="flex" key={item.label}>
+                                <SidebarItem
+                                    href={item.href}
+                                    startIcon={
+                                        <item.icon
+                                            width={32}
+                                            height={32}
+                                            className="mx-5"
+                                        />
+                                    }
+                                >
+                                    {item.label}
                                 </SidebarItem>
                             </div>
                         ))}
