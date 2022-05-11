@@ -1,24 +1,30 @@
 //@ts-nocheck
+import { classNames } from '@/utils/styling'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import Typography from '../Typography'
 
 interface ModalProps {
+    className?: string
     label?: string | JSX.Element
     buttonLabel?: string
     title: string
     children: React.ReactNode
     onClick?: (event: React.MouseEvent<HTMLDivElement>) => void
-    variant: 'success' | 'error'
+    onCancel?: (event: React.MouseEvent<HTMLDivElement>) => void
+    onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void
+    variant: 'success' | 'error' | 'base'
     initialState?: boolean
 }
 
 const VARIANT = {
     success:
-        'inline-flex justify-center rounded-md border border-transparent bg-gray-900 px-4 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-300',
-    error: 'inline-flex justify-center rounded-md border border-transparent bg-red-700 px-4 py-2 text-sm font-medium text-red-100 hover:bg-red-800 hover:text-red-200',
+        'inline-flex justify-center rounded-md border border-transparent bg-green-700 px-4 py-2 text-sm font-medium text-green-100 hover:opacity-80 hover:text-gray-300',
+    error: 'inline-flex justify-center rounded-md border border-transparent bg-red-700 px-4 py-2 text-sm font-medium text-red-100 hover:opacity-80 hover:text-red-200',
+    base: 'inline-flex justify-center rounded-md border border-transparent bg-gray-700 px-4 py-2 text-sm font-medium text-gray-100 hover:opacity-80 hover:text-gray-200',
 }
 const Modal: React.FC<ModalProps> = ({
+    className,
     label,
     buttonLabel,
     title,
@@ -26,6 +32,8 @@ const Modal: React.FC<ModalProps> = ({
     variant = 'success',
     initialState = false,
     onClick = () => {},
+    onCancel = () => {},
+    onKeyDown = () => {},
 }) => {
     const [isOpen, setIsOpen] = useState(initialState)
 
@@ -39,11 +47,26 @@ const Modal: React.FC<ModalProps> = ({
 
     return (
         <>
-            <div className="flex items-center justify-center">
+            <div
+                className={classNames(
+                    className,
+                    'flex items-center justify-center'
+                )}
+            >
                 <Typography onClick={openModal}>{label}</Typography>
             </div>
             <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                <Dialog
+                    as="div"
+                    className="relative z-10"
+                    onClose={closeModal}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            onKeyDown && onKeyDown(e)
+                            closeModal()
+                        }
+                    }}
+                >
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -80,7 +103,7 @@ const Modal: React.FC<ModalProps> = ({
                                         </Typography>
                                     </div>
 
-                                    <div className="mt-4 flex gap-2">
+                                    <div className="mt-4 flex gap-2 ">
                                         {variant === 'success' ? (
                                             <>
                                                 <button
@@ -99,6 +122,10 @@ const Modal: React.FC<ModalProps> = ({
                                                 <button
                                                     type="button"
                                                     className={VARIANT[variant]}
+                                                    onKeyDown={() => {
+                                                        onClick()
+                                                        closeModal()
+                                                    }}
                                                     onClick={() => {
                                                         onClick()
                                                         closeModal()
@@ -109,7 +136,10 @@ const Modal: React.FC<ModalProps> = ({
                                                 <button
                                                     type="button"
                                                     className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-300 hover:text-gray-700 "
-                                                    onClick={closeModal}
+                                                    onClick={() => {
+                                                        onCancel && onCancel()
+                                                        closeModal()
+                                                    }}
                                                 >
                                                     Cancel
                                                 </button>

@@ -12,21 +12,6 @@ import CustomListItem from './ListItem'
 
 const ItemList: React.FC = () => {
     const { data: session, status } = useSession()
-    const [checked, setChecked] = useState([0])
-
-    const handleToggle = (value: number) => () => {
-        const currentIndex = checked.indexOf(value)
-        const newChecked = [...checked]
-
-        if (currentIndex === -1) {
-            newChecked.push(value)
-        } else {
-            newChecked.splice(currentIndex, 1)
-        }
-
-        setChecked(newChecked)
-    }
-
     const [resumes, setResumes] = useState<Resume[]>([])
 
     const { data, mutate } = useSWRImmutable(
@@ -73,6 +58,20 @@ const ItemList: React.FC = () => {
         mutate()
     }
 
+    const editHandler = async (item: Resume) => {
+        // send request to backend to delete resume
+        const response = await axios.post(
+            'https://ibs-matchmaking-api.azurewebsites.net/updateItem',
+            { fileName: item.id },
+            {
+                headers: {
+                    Authorization: `Bearer ${session!.accessToken}`,
+                },
+            }
+        )
+        // Call useWR to update the component with the latest data
+        mutate()
+    }
     return (
         <ul className="bg-gray-700 rounded-md max-w-screen-xl">
             {resumes.map((resume: Resume) => {
@@ -80,7 +79,8 @@ const ItemList: React.FC = () => {
                     <CustomListItem
                         data={resume}
                         key={resume.id}
-                        onClick={() => deleteHandler(resume.id)}
+                        onClickDelete={() => deleteHandler(resume.id)}
+                        onClickEdit={() => editHandler(resume.id)}
                     />
                 )
             })}

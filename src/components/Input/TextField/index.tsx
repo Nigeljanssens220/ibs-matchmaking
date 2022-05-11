@@ -1,5 +1,4 @@
 import { classNames } from '@/utils/styling'
-import { TextField } from '@mui/material'
 import React from 'react'
 
 interface InputTextFieldProps extends React.HTMLProps<HTMLInputElement> {
@@ -7,38 +6,28 @@ interface InputTextFieldProps extends React.HTMLProps<HTMLInputElement> {
     value?: string
     label?: string
     placeholder?: string
-    onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const InputTextField: React.FC<InputTextFieldProps> = ({
     className,
     value,
-    label,
     placeholder,
     onKeyDown,
     onChange,
 }) => {
     return (
-        <TextField
+        <input
+            type="text"
             placeholder={placeholder}
-            label={label}
-            variant="filled"
             className={classNames(
                 className,
-                'bg-gray-700 max-w-md w-full rounded-lg'
+                'appearance-none outline-none rounded placeholder:text-gray-500 bg-gray-700 px-3 py-2 block w-full min-w-0 focus:border-2 focus:ring-gray-300 focus:border-gray-300'
             )}
             value={value}
             onKeyDown={onKeyDown}
             onChange={onChange}
-            InputLabelProps={{
-                shrink: true,
-                style: { color: 'white' },
-            }}
-            InputProps={{
-                disableUnderline: true,
-                style: { color: 'white' },
-            }}
         />
     )
 }
