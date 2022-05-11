@@ -12,6 +12,7 @@ import {
     SortDescendingIcon,
 } from '@heroicons/react/solid'
 import { TextField } from '@mui/material'
+import parse from 'html-react-parser'
 import React from 'react'
 import {
     useAsyncDebounce,
@@ -22,6 +23,7 @@ import {
     useTable,
 } from 'react-table'
 import PageButton from '../ButtonNew/PageButton'
+import SecondaryActionModal from '../Modal/SecondaryActionModal'
 import NavLink from '../NavLink'
 import Typography from '../Typography'
 
@@ -223,6 +225,7 @@ const TableNew = ({ columns, data }) => {
                                                             arr.length - 1 ===
                                                             idx
                                                         ) {
+                                                            console.log(page)
                                                             return (
                                                                 <td
                                                                     {...cell.getCellProps()}
@@ -240,6 +243,13 @@ const TableNew = ({ columns, data }) => {
                                                                                 }
                                                                                 blank
                                                                             >
+                                                                                {/* {
+                                                                                    page[
+                                                                                        idx
+                                                                                    ]
+                                                                                        .original
+                                                                                        .job_description_html
+                                                                                } */}
                                                                                 view
                                                                             </NavLink>
                                                                         </div>
@@ -287,10 +297,27 @@ const TableNew = ({ columns, data }) => {
                                                                     .Cell
                                                                     .name ===
                                                                 'defaultRenderer' ? (
-                                                                    <div className="text-sm text-gray-900 ">
-                                                                        {cell.render(
-                                                                            'Cell'
-                                                                        )}
+                                                                    <div className=" text-gray-900 items-start flex ">
+                                                                        <SecondaryActionModal
+                                                                            className=" "
+                                                                            title={
+                                                                                cell.value
+                                                                            }
+                                                                            label={
+                                                                                cell.value
+                                                                            }
+                                                                            buttonLabel="Share"
+                                                                            secondaryButtonLabel="Share"
+                                                                            variant="base"
+                                                                        >
+                                                                            {parse(
+                                                                                page[
+                                                                                    i
+                                                                                ]
+                                                                                    .original
+                                                                                    .job_description_html
+                                                                            )}
+                                                                        </SecondaryActionModal>
                                                                     </div>
                                                                 ) : (
                                                                     cell.render(

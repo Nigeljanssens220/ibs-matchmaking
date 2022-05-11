@@ -8,9 +8,11 @@ interface ModalProps {
     className?: string
     label?: string | JSX.Element
     buttonLabel?: string
+    secondaryButtonLabel?: string
     title: string
     children: React.ReactNode
     onClick?: (event: React.MouseEvent<HTMLDivElement>) => void
+    onClickSecondary?: (event: React.MouseEvent<HTMLDivElement>) => void
     onCancel?: (event: React.MouseEvent<HTMLDivElement>) => void
     onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void
     variant: 'success' | 'error' | 'base'
@@ -24,15 +26,17 @@ const VARIANT = {
     base: 'inline-flex justify-center rounded-md border border-transparent bg-gray-700 px-4 py-2 text-sm font-medium text-gray-100 hover:opacity-80 hover:text-gray-200',
 }
 
-const Modal: React.FC<ModalProps> = ({
+const SecondaryActionModal: React.FC<ModalProps> = ({
     className,
     label,
     buttonLabel,
+    secondaryButtonLabel,
     title,
     children,
     variant = 'success',
     initialState = false,
     onClick = () => {},
+    onClickSecondary = () => {},
     onCancel = () => {},
     onKeyDown = () => {},
 }) => {
@@ -55,7 +59,11 @@ const Modal: React.FC<ModalProps> = ({
                     'flex items-center justify-center'
                 )}
             >
-                <Typography variant="md" onClick={openModal}>
+                <Typography
+                    variant="md"
+                    onClick={openModal}
+                    className="cursor-pointer"
+                >
                     {label}
                 </Typography>
             </div>
@@ -84,8 +92,8 @@ const Modal: React.FC<ModalProps> = ({
                         <div className="fixed inset-0 bg-black bg-opacity-50 blur-sm" />
                     </Transition.Child>
 
-                    <div className="fixed inset-0 overflow-y-auto border-8">
-                        <div className="flex min-h-full items-center justify-center p-4 text-center border-8">
+                    <div className="fixed inset-0 overflow-y-auto ">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center ">
                             <Transition.Child
                                 as={Fragment}
                                 enter="ease-out duration-300"
@@ -95,14 +103,30 @@ const Modal: React.FC<ModalProps> = ({
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className=" w-full max-w-screen-lg border-8 border-yellow-500 transform overflow-hidden rounded-2xl bg-white p-6 text-left  shadow-xl transition-all">
-                                    <Dialog.Title
-                                        ref={titleRef}
-                                        as="h3"
-                                        className="text-lg font-medium leading-6 text-gray-900"
-                                    >
-                                        {title}
-                                    </Dialog.Title>
+                                <Dialog.Panel className=" w-full max-w-screen-lg  transform overflow-hidden rounded-xl bg-white p-6 text-left  shadow-xl transition-all">
+                                    <div className="flex items-center justify-between w-full">
+                                        <Dialog.Title
+                                            ref={titleRef}
+                                            as="h3"
+                                            className="text-lg font-medium leading-6 text-gray-900"
+                                        >
+                                            {title}
+                                        </Dialog.Title>
+                                        <button
+                                            type="button"
+                                            className={VARIANT[variant]}
+                                            onKeyDown={() => {
+                                                onClickSecondary()
+                                                closeModal()
+                                            }}
+                                            onClick={() => {
+                                                onClickSecondary()
+                                                closeModal()
+                                            }}
+                                        >
+                                            {secondaryButtonLabel}
+                                        </button>
+                                    </div>
                                     <div className="mt-2">
                                         <Typography className="text-sm text-gray-500">
                                             {children}
@@ -147,7 +171,7 @@ const Modal: React.FC<ModalProps> = ({
                                                         closeModal()
                                                     }}
                                                 >
-                                                    Cancel
+                                                    Close
                                                 </button>
                                             </>
                                         )}
@@ -162,4 +186,4 @@ const Modal: React.FC<ModalProps> = ({
     )
 }
 
-export default Modal
+export default SecondaryActionModal
