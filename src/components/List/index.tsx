@@ -80,7 +80,7 @@ const ItemList: React.FC = () => {
                         data={resume}
                         key={resume.id}
                         onClickDelete={() => deleteHandler(resume.id)}
-                        onClickEdit={() => editHandler(resume.id)}
+                        onClickEdit={() => editHandler(resume)}
                     />
                 )
             })}
