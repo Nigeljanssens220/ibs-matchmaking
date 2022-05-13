@@ -1,3 +1,4 @@
+//@ts-nocheck
 import SecondaryActionModal from '@/components/Modal/SecondaryActionModal'
 import NavLink from '@/components/NavLink'
 import { ExternalLinkIcon } from '@heroicons/react/outline'
