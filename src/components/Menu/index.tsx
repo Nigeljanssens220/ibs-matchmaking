@@ -83,15 +83,15 @@ const Menu: FC<MenuProps> = ({ items, className }) => {
                         <XIcon className="text-black " width={32} height={32} />
                     </button>
                     <ul className="flex flex-col md:flex md:flex-row items-center justify-center fixed md:relative top-0 bottom-0 left-0 right-0 bg-white md:bg-transparent z-20 space-y-10 md:space-y-0 md:space-x-10">
-                        {items.map(({ label, href, protectedItem }) =>
+                        {items.map(({ label, href, protectedItem }, index) =>
                             protectedItem && session ? (
-                                <MenuItem key={label} href={href}>
+                                <MenuItem key={index} href={href}>
                                     {label}
                                 </MenuItem>
                             ) : protectedItem && !session ? (
                                 <></>
                             ) : (
-                                <MenuItem key={label} href={href}>
+                                <MenuItem key={index} href={href}>
                                     {label}
                                 </MenuItem>
                             )

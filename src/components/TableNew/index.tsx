@@ -12,7 +12,6 @@ import {
     SortDescendingIcon,
 } from '@heroicons/react/solid'
 import { TextField } from '@mui/material'
-import parse from 'html-react-parser'
 import React from 'react'
 import {
     useAsyncDebounce,
@@ -23,8 +22,6 @@ import {
     useTable,
 } from 'react-table'
 import PageButton from '../ButtonNew/PageButton'
-import SecondaryActionModal from '../Modal/SecondaryActionModal'
-import NavLink from '../NavLink'
 import Typography from '../Typography'
 
 const pageViewOptions = [5, 10, 15]
@@ -221,47 +218,6 @@ const TableNew = ({ columns, data }) => {
                                             <tr {...row.getRowProps()}>
                                                 {row.cells.map(
                                                     (cell, idx, arr) => {
-                                                        if (
-                                                            arr.length - 1 ===
-                                                            idx
-                                                        ) {
-                                                            console.log(page)
-                                                            return (
-                                                                <td
-                                                                    {...cell.getCellProps()}
-                                                                    className="px-4 h-16"
-                                                                    role="cell"
-                                                                >
-                                                                    {cell.column
-                                                                        .Cell
-                                                                        .name ===
-                                                                    'defaultRenderer' ? (
-                                                                        <div className=" text-gray-500 text-sm pr-2">
-                                                                            <NavLink
-                                                                                href={
-                                                                                    cell.value
-                                                                                }
-                                                                                blank
-                                                                            >
-                                                                                {/* {
-                                                                                    page[
-                                                                                        idx
-                                                                                    ]
-                                                                                        .original
-                                                                                        .job_description_html
-                                                                                } */}
-                                                                                view
-                                                                            </NavLink>
-                                                                        </div>
-                                                                    ) : (
-                                                                        cell.render(
-                                                                            'Cell'
-                                                                        )
-                                                                    )}
-                                                                </td>
-                                                            )
-                                                        }
-
                                                         if (idx !== 0) {
                                                             return (
                                                                 <td
@@ -290,34 +246,17 @@ const TableNew = ({ columns, data }) => {
                                                         return (
                                                             <td
                                                                 {...cell.getCellProps()}
-                                                                className="px-4 w-96 text-gray-900 h-16"
+                                                                className="px-4 w-96 text-gray-900 h-16 "
                                                                 role="cell"
                                                             >
                                                                 {cell.column
                                                                     .Cell
                                                                     .name ===
                                                                 'defaultRenderer' ? (
-                                                                    <div className=" text-gray-900 items-start flex ">
-                                                                        <SecondaryActionModal
-                                                                            className=" "
-                                                                            title={
-                                                                                cell.value
-                                                                            }
-                                                                            label={
-                                                                                cell.value
-                                                                            }
-                                                                            buttonLabel="Share"
-                                                                            secondaryButtonLabel="Share"
-                                                                            variant="base"
-                                                                        >
-                                                                            {parse(
-                                                                                page[
-                                                                                    i
-                                                                                ]
-                                                                                    .original
-                                                                                    .job_description_html
-                                                                            )}
-                                                                        </SecondaryActionModal>
+                                                                    <div className="text-sm text-gray-900 ">
+                                                                        {cell.render(
+                                                                            'Cell'
+                                                                        )}
                                                                     </div>
                                                                 ) : (
                                                                     cell.render(
