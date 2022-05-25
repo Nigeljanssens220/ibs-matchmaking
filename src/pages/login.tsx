@@ -7,7 +7,7 @@ import React from 'react'
 
 const Login: NextPage = () => {
     const handleMicrosoftLogin = () => {
-        signIn('azure-ad', { callbackUrl: '/dashboard' })
+        signIn('azure-ad', { callbackUrl: '/dashboard/projects' })
     }
 
     return (
