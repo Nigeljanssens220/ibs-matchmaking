@@ -13,6 +13,7 @@ import {
     ExternalLinkIcon,
     LocationMarkerIcon,
 } from '@heroicons/react/solid'
+import { JellyTriangle } from '@uiball/loaders'
 import type { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
@@ -139,7 +140,7 @@ const Projects: NextPage = () => {
         <DashboardLayout>
             <div className="min-h-screen flex flex-col w-full p-3 lg:p-6 xl:px-8 ">
                 <div className="sm:flex sm:items-center pb-6">
-                    <div className="sm:flex-auto">
+                    <div className="sm:flex-auto  sm:max-w-screen-xl">
                         <Typography
                             className="md:text-3xl font-semibold text-gray-200"
                             variant="h3"
@@ -157,13 +158,22 @@ const Projects: NextPage = () => {
                             have matched with. These included position, hourly
                             rate and weekly hours.
                         </Typography>
+                        {!data && (
+                            <div className="flex w-full items-center justify-center p-96  text-xl ">
+                                <JellyTriangle
+                                    size={80}
+                                    speed={1.75}
+                                    color="white"
+                                />
+                            </div>
+                        )}
                     </div>
                 </div>
-                <div className=" relative hidden xl:block items-center  ">
-                    {projects && (
+                {data && (
+                    <div className=" relative hidden xl:block items-center  ">
                         <TableNew columns={projectColumns} data={projects} />
-                    )}
-                </div>
+                    </div>
+                )}
                 <div className="flex flex-col xl:hidden divide-y  divide-gray-200 ">
                     {projects &&
                         projects.map((project: Project) => (
