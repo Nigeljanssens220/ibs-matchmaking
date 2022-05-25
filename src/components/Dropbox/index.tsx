@@ -2,12 +2,10 @@ import { useUploadForm } from '@/utils/hooks'
 import { FolderAddIcon } from '@heroicons/react/outline'
 import { TextField } from '@mui/material'
 import { useSession } from 'next-auth/react'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
+import toast from 'react-hot-toast'
 import { useSWRConfig } from 'swr'
-import Spinner from '../Animations/Loading/Spinner'
-import Modal from '../Modal'
-import Typography from '../Typography'
 
 interface FileUploadProps {
     matchmaking: boolean
@@ -16,27 +14,18 @@ interface FileUploadProps {
 }
 
 const Dropbox: React.FC = ({}) => {
-    const { data: session, status } = useSession()
+    const { data: session } = useSession()
     const [formValues, setFormValues] = useState<FileUploadProps>({
         matchmaking: true,
         description: '',
         file: null,
     })
-    const [submitting, setSubmitting] = useState(true)
-    const [uploadProgress, setUploadProgress] = useState(0)
     const [description, setDescription] = useState('')
     const { mutate } = useSWRConfig()
 
-    const { isSuccess, uploadForm, progress } = useUploadForm(
+    const { uploadForm } = useUploadForm(
         'https://ibs-matchmaking-api.azurewebsites.net/createItem'
     )
-
-    const hasSubmitted = (formValues: { file: any }, submitting: boolean) => {
-        if (formValues.file && submitting) {
-            return false
-        }
-        return true
-    }
 
     const onDrop = useCallback((acceptedFile) => {
         setFormValues((prevFormValues) => ({
@@ -55,6 +44,26 @@ const Dropbox: React.FC = ({}) => {
     })
 
     const handleSubmit = async () => {
+        if (!formValues.file)
+            return toast.error('Please select a file.', { duration: 1500 })
+
+        // Toast animation during submitting
+        const notification = toast.loading(
+            'Uploading...'
+            // Custom styling if needed
+            // {
+            //     style: {
+            //         border: '1px solid #713200',
+            //         padding: '16px',
+            //         color: '#713200',
+            //     },
+            //     iconTheme: {
+            //         primary: '#713200',
+            //         secondary: '#FFFAEE',
+            //     },
+            // }
+        )
+
         let formData = new FormData()
         formData.append('description', description)
         formData.append('matchmaking', formValues.matchmaking.toString())
@@ -63,29 +72,21 @@ const Dropbox: React.FC = ({}) => {
         await uploadForm(formData)
 
         setFormValues({ file: null, matchmaking: true, description: '' })
-        setSubmitting(false)
-        setUploadProgress(0)
 
         // update existing data in cache with newly uploaded resume
         mutate(
-            status !== 'authenticated'
-                ? null
-                : [
+            session
+                ? [
                       'https://ibs-matchmaking-api.azurewebsites.net/readItems',
                       session!.accessToken,
                   ]
+                : null
         )
-        // setSubmitting(true)
-        console.log(isSuccess)
-        console.log(submitting)
+
+        toast.success('Successfully submitted!', {
+            id: notification,
+        })
     }
-
-    useEffect(() => {
-        if (progress) setUploadProgress(progress)
-        return () => setUploadProgress(0)
-    }, [progress])
-
-    useEffect(() => {}, [submitting])
 
     return (
         <>
@@ -118,15 +119,15 @@ const Dropbox: React.FC = ({}) => {
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                         handleSubmit()
-                        setSubmitting(!submitting)
+                        // setSubmitting(!submitting)
                     }
                 }}
                 onChange={(e) => {
                     setDescription(e.target.value)
-                    // setFormValues((prevFormValues) => ({
-                    //     ...prevFormValues,
-                    //     description: e.target.value,
-                    // }))
+                    setFormValues((prevFormValues) => ({
+                        ...prevFormValues,
+                        description: e.target.value,
+                    }))
                 }}
                 InputLabelProps={{
                     shrink: true,
@@ -139,28 +140,13 @@ const Dropbox: React.FC = ({}) => {
             />
             <button
                 onClick={() => {
-                    handleSubmit
-                    setSubmitting(!submitting)
+                    handleSubmit()
+                    setDescription('')
                 }}
                 className="flex items-center justify-center w-full max-w-md rounded-md px-4 h-16 text-gray-100 bg-gray-700 hover:bg-gray-500"
             >
-                {uploadProgress ? <Spinner className="w-8 h-8" /> : 'Submit'}
+                Submit
             </button>
-            {!isSuccess && !submitting && (
-                <Modal
-                    title="An unexpected error occurred"
-                    buttonLabel="Try again"
-                    variant="success"
-                    initialState={true}
-                >
-                    <Typography>
-                        We were unable to upload your data to our database.
-                        Please check if you have uploaded your resume
-                        previously, or contact an administrator if the problem
-                        persists.
-                    </Typography>
-                </Modal>
-            )}
         </>
     )
 }

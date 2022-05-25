@@ -7,7 +7,7 @@ import React from 'react'
 
 const Login: NextPage = () => {
     const handleMicrosoftLogin = () => {
-        signIn('azure-ad', { callbackUrl: '/dashboard' })
+        signIn('azure-ad', { callbackUrl: '/dashboard/projects' })
     }
 
     return (
@@ -28,7 +28,7 @@ const Login: NextPage = () => {
                 >
                     Isatis Business Solutions
                 </Typography>
-                <div className="flex flex-col space-y-2 bg-white shadow rounded-xl lg:w-1/3  md:w-1/2 w-full p-10 mt-16 text-center">
+                <div className="flex flex-col space-y-2 bg-white shadow rounded-xl md:max-w-xl w-full p-10 mt-16 text-center">
                     <Typography
                         weight="bold"
                         variant="h3"
@@ -37,7 +37,7 @@ const Login: NextPage = () => {
                     >
                         Login to your account
                     </Typography>
-                    <Typography
+                    {/* <Typography
                         weight="medium"
                         variant="md"
                         className="leading-none text-gray-600"
@@ -50,7 +50,7 @@ const Login: NextPage = () => {
                         >
                             Sign up here
                         </Typography>
-                    </Typography>
+                    </Typography> */}
                     <Button
                         onClick={handleMicrosoftLogin}
                         className="flex flex-1 items-center justify-center rounded-xl hover:bg-zinc-200 hover:text-zinc-800 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border  border-gray-700  w-full mt-10"
