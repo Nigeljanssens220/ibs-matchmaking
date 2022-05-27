@@ -6,7 +6,7 @@ export const headers = [
     },
     {
         label: 'Dashboard',
-        href: '/dashboard',
+        href: '/dashboard/projects',
         protectedItem: true,
     },
     {
