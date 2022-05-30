@@ -25,6 +25,13 @@ export const useUploadForm = (url: string) => {
                         50 + (progressEvent.loaded / progressEvent.total) * 50
                     setProgress(progress)
                 },
+                transformRequest: [
+                    (data, headers) => {
+                        //@ts-ignore
+                        delete headers.common['Authorization']
+                        return data
+                    },
+                ],
             })
 
             if (response.status === 200) {

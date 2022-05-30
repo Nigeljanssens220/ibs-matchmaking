@@ -3,6 +3,7 @@ import { PencilIcon, TrashIcon } from '@heroicons/react/outline'
 import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { useSWRConfig } from 'swr'
 import Badge from '../Badge'
 import InputTextField from '../Input/TextField'
@@ -14,8 +15,6 @@ import Typography from '../Typography'
 interface CustomListItemProps {
     data: Resume
     children?: React.ReactNode
-    onClickDelete?: (event: React.MouseEvent<HTMLDivElement>) => void
-    onClickEdit?: (event: React.MouseEvent<HTMLDivElement>) => void
 }
 
 const CustomListItem: React.FC<CustomListItemProps> = ({ data }) => {
@@ -48,6 +47,7 @@ const CustomListItem: React.FC<CustomListItemProps> = ({ data }) => {
                       session!.accessToken,
                   ]
         )
+        toast.success('Successfully deleted.')
     }
 
     const editHandler = async (item: Resume) => {
@@ -76,6 +76,7 @@ const CustomListItem: React.FC<CustomListItemProps> = ({ data }) => {
                       session!.accessToken,
                   ]
         )
+        toast.success('Successfully updated.')
     }
 
     return (
