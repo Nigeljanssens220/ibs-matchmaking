@@ -1,6 +1,5 @@
 import { Resume } from '@/types/database'
 import { fetcher } from '@/utils/fetch'
-import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import useSWRImmutable from 'swr/immutable'
@@ -43,46 +42,10 @@ const ItemList: React.FC = () => {
         }
     }, [data])
 
-    const deleteHandler = async (fileName: string) => {
-        // send request to backend to delete resume
-        const response = await axios.post(
-            'https://ibs-matchmaking-api.azurewebsites.net/deleteItem',
-            { fileName: fileName },
-            {
-                headers: {
-                    Authorization: `Bearer ${session!.accessToken}`,
-                },
-            }
-        )
-        // Call useWR to update the component with the latest data
-        mutate()
-    }
-
-    const editHandler = async (item: Resume) => {
-        // send request to backend to delete resume
-        const response = await axios.post(
-            'https://ibs-matchmaking-api.azurewebsites.net/updateItem',
-            { fileName: item.id },
-            {
-                headers: {
-                    Authorization: `Bearer ${session!.accessToken}`,
-                },
-            }
-        )
-        // Call useWR to update the component with the latest data
-        mutate()
-    }
     return (
         <ul className="bg-gray-700 rounded-md max-w-screen-xl">
             {resumes.map((resume: Resume) => {
-                return (
-                    <CustomListItem
-                        data={resume}
-                        key={resume.id}
-                        onClickDelete={() => deleteHandler(resume.id)}
-                        onClickEdit={() => editHandler(resume)}
-                    />
-                )
+                return <CustomListItem data={resume} key={resume.id} />
             })}
         </ul>
     )

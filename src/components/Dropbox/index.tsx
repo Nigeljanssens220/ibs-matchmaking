@@ -48,21 +48,7 @@ const Dropbox: React.FC = ({}) => {
             return toast.error('Please select a file.', { duration: 1500 })
 
         // Toast animation during submitting
-        const notification = toast.loading(
-            'Uploading...'
-            // Custom styling if needed
-            // {
-            //     style: {
-            //         border: '1px solid #713200',
-            //         padding: '16px',
-            //         color: '#713200',
-            //     },
-            //     iconTheme: {
-            //         primary: '#713200',
-            //         secondary: '#FFFAEE',
-            //     },
-            // }
-        )
+        const notification = toast.loading('Uploading...')
 
         let formData = new FormData()
         formData.append('description', description)
