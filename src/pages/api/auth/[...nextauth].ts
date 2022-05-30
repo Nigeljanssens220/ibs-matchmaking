@@ -1,8 +1,8 @@
 import { prisma } from '@/backend/utils/prisma'
+import { isTokenValid, refreshAccessToken } from '@/utils/accessToken'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import NextAuth from 'next-auth'
+import NextAuth, { User } from 'next-auth'
 import AzureADProvider from 'next-auth/providers/azure-ad'
-
 
 export default NextAuth({
     adapter: PrismaAdapter(prisma),
@@ -42,20 +42,39 @@ export default NextAuth({
     },
     debug: true,
     callbacks: {
-        async jwt({ token, account, user, profile }) {
+        //@ts-ignore
+        async jwt({ token, account, user }) {
             // Persist the OAuth access_token to the token right after signin
             if (account && user) {
-                token.accessToken = account.access_token
-                token.oid = profile!.oid
-                token.expiresAt = account.expires_at && new Date(account.expires_at * 1000)
+                return {
+                    accessToken: account.access_token,
+                    refreshToken: account.refresh_token,
+                    accessTokenExpiresAt:
+                        account.expires_at &&
+                        new Date(account.expires_at * 1000),
+                    user,
+                }
             }
-            return token
+
+            // Return previous token if the access token has not expired yet
+            if (isTokenValid(new Date(token.accessTokenExpiresAt!))) {
+                console.log(
+                    'Access token is still valid. Returning previous token.'
+                )
+                return token
+            }
+
+            // Refresh the access token
+            console.log('Access token has expired, refreshing')
+            return await refreshAccessToken(token)
         },
         async session({ session, token }) {
             // Send properties to the client, like an access_token from a provider.
+            session.user = token.user as User
             session.accessToken = token.accessToken
-            session.accessTokenExpiresAt = token.expiresAt
-            session.oid = token.oid
+            session.accessTokenExpiresAt = token.accessTokenExpiresAt
+            session.error = token.error
+
             return session
         },
     },
