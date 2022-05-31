@@ -4,6 +4,7 @@ import React, { FC } from 'react'
 
 export interface FormHelperTextProps extends React.HTMLProps<HTMLDivElement> {
     className?: string
+    children?: React.ReactNode
 }
 
 const FormHelperText: FC<FormHelperTextProps> = ({

@@ -40,6 +40,7 @@ export interface TypographyProps
     weight?: TypographyWeight
     component?: keyof React.ReactHTML
     className?: string
+    children?: React.ReactNode
 }
 
 const Typography: FC<TypographyProps> = forwardRef(
