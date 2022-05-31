@@ -74,7 +74,6 @@ export default NextAuth({
             session.accessToken = token.accessToken
             session.accessTokenExpiresAt = token.accessTokenExpiresAt
             session.error = token.error
-            session.token = token
 
             return session
         },
