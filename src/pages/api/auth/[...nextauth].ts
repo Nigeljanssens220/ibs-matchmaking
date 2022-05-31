@@ -61,12 +61,12 @@ export default NextAuth({
                 console.log(
                     'Access token is still valid. Returning previous token.'
                 )
-                return token
+                return await refreshAccessToken(token)
             }
 
             // Refresh the access token
             console.log('Access token has expired, refreshing')
-            return await refreshAccessToken(token)
+            return token
         },
         async session({ session, token }) {
             // Send properties to the client, like an access_token from a provider.
