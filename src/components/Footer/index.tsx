@@ -1,12 +1,15 @@
-import React, { FC } from 'react'
-import Typography from '../Typography'
-import Link from 'next/link'
+import { aboutFooters, documentationFooters } from '@/lib/footers'
 import Image from 'next/image'
-
-import { documentationFooters, aboutFooters } from '@/lib/footers'
+import Link from 'next/link'
+import React, { FC } from 'react'
 import NavLink from '../NavLink'
+import Typography from '../Typography'
 
-const Footer: FC = ({ children }) => {
+interface FooterProps {
+    children?: React.ReactNode
+}
+
+const Footer: FC<FooterProps> = ({ children }) => {
     return (
         // center this div
         <div className="p-10 mt-6 flex flex-col justify-evenly w-full">

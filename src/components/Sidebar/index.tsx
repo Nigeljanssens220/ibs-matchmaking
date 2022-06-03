@@ -10,7 +10,11 @@ import NavLink from '../NavLink'
 import Typography from '../Typography'
 import SidebarItem from './SidebarItem'
 
-const Sidebar: React.FC = ({ children }) => {
+interface SidebarProps {
+    children?: React.ReactNode
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ children }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const { data: session } = useSession()
     const router = useRouter()

@@ -26,6 +26,8 @@ export const refreshAccessToken = async (token: JWT) => {
             'Content-Type': 'application/x-www-form-urlencoded',
         }
 
+        console.log(token)
+
         const body = qs.stringify({
             grant_type: 'refresh_token',
             client_id: process.env.AZURE_AD_CLIENT_ID,

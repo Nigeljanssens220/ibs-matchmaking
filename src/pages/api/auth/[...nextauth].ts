@@ -1,11 +1,9 @@
-import { prisma } from '@/backend/utils/prisma'
 import { isTokenValid, refreshAccessToken } from '@/utils/accessToken'
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import NextAuth, { User } from 'next-auth'
 import AzureADProvider from 'next-auth/providers/azure-ad'
 
 export default NextAuth({
-    adapter: PrismaAdapter(prisma),
+    // adapter: PrismaAdapter(prisma),
     // Configure one or more authentication providers
     providers: [
         AzureADProvider({

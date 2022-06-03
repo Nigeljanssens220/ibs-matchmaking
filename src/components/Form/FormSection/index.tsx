@@ -1,7 +1,8 @@
-import React, { FC, ReactElement } from 'react'
+import React, { FC, ReactElement, ReactNode } from 'react'
 import FormSectionHeader, { FormSectionHeaderProps } from './FormSectionHeader'
 
 export interface FormSectionProps {
+    children?: ReactNode
     header: ReactElement<FormSectionHeaderProps>
     columns?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
     className?: string
