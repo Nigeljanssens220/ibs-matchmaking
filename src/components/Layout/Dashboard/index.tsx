@@ -1,6 +1,10 @@
 import Sidebar from '@/components/Sidebar'
 
-const DashboardLayout: React.FC = ({ children }) => {
+interface LayoutProps {
+    children: React.ReactNode
+}
+
+const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
     return (
         <Sidebar>{children}</Sidebar>
         // <main className="bg-gray-800 h-screen overflow-hidden relative">

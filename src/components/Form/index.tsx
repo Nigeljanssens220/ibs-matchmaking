@@ -11,6 +11,7 @@ export const FORM_STYLING =
 export interface FormProps extends UseFormReturn<any> {
     // @ts-ignore TYPE NEEDS FIXING
     onSubmit(x): void
+    children?: React.ReactNode
 }
 
 type Form<P> = FC<P> & {

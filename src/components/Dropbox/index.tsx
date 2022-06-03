@@ -27,7 +27,7 @@ const Dropbox: React.FC = ({}) => {
         'https://ibs-matchmaking-api.azurewebsites.net/createItem'
     )
 
-    const onDrop = useCallback((acceptedFile) => {
+    const onDrop = useCallback((acceptedFile: (File | null)[]) => {
         setFormValues((prevFormValues) => ({
             ...prevFormValues,
             file: acceptedFile ? acceptedFile[0] : null,
